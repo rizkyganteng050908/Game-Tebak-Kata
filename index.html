@@ -172,6 +172,7 @@
     <div id="game-screen" class="hidden">
         <div class="game-header">
             <span class="category-badge" id="category-title">Kategori</span>
+            <div>Soal: <strong id="question-number">1/10</strong></div>
             <div>Skor: <strong id="score">0</strong></div>
             <div>Waktu: <strong id="timer">30</strong>s</div>
         </div>
@@ -198,35 +199,55 @@
 </div>
 
 <script>
-    // Database Soal & Petunjuk
+    // Database Soal & Petunjuk Lebih Banyak
     const database = {
         hewan: [
             { target: "Komodo", clues: ["Kadal terbesar di dunia", "Endemik dari Nusa Tenggara Timur"] },
             { target: "Harimau Sumatra", clues: ["Kucing besar endemik pulau Sumatra", "Memiliki garis-garis hitam tebal"] },
             { target: "Orangutan", clues: ["Kera besar berambut kemerahan", "Banyak ditemukan di Kalimantan dan Sumatra"] },
             { target: "Cenderawasih", clues: ["Burung indah dijuluki Burung Surga", "Berasal dari wilayah Papua"] },
-            { target: "Anoa", clues: ["Mamalia mirip kerbau berukuran kecil", "Endemik pulau Sulawesi"] }
+            { target: "Anoa", clues: ["Mamalia mirip kerbau berukuran kecil", "Endemik pulau Sulawesi"] },
+            { target: "Bekantan", clues: ["Monyet berhidung panjang dan besar", "Endemik pulau Kalimantan"] },
+            { target: "Gajah Sumatra", clues: ["Mamalia darat terbesar di Indonesia", "Memiliki belalai dan gading"] },
+            { target: "Badak Jawa", clues: ["Hewan langka bercula satu", "Banyak dilindungi di Ujung Kulon"] },
+            { target: "Tarsius", clues: ["Mamalia kecil bermata sangat besar", "Hewan nokturnal asal Sulawesi"] },
+            { target: "Burung Jalak Bali", clues: ["Burung pengicau berwarna putih bersih", "Endemik pulau Bali"] }
         ],
         presiden: [
             { target: "Soekarno", clues: ["Presiden Indonesia pertama", "Bapak Proklamator Indonesia"] },
             { target: "Soeharto", clues: ["Presiden ke-2 Indonesia", "Memimpin pada masa Orde Baru"] },
             { target: "BJ Habibie", clues: ["Presiden ke-3 Indonesia", "Ahli teknologi penerbangan nasional"] },
             { target: "Gus Dur", clues: ["Presiden ke-4 Indonesia", "Nama aslinya Abdurrahman Wahid"] },
-            { target: "Joko Widodo", clues: ["Presiden ke-7 Indonesia", "Akrab dipanggil Jokowi"] }
+            { target: "Megawati", clues: ["Presiden ke-5 Indonesia", "Presiden wanita pertama di Indonesia"] },
+            { target: "Susilo Bambang Yudhoyono", clues: ["Presiden ke-6 Indonesia", "Sering disapa dengan singkatan SBY"] },
+            { target: "Joko Widodo", clues: ["Presiden ke-7 Indonesia", "Akrab dipanggil Jokowi"] },
+            { target: "Prabowo Subianto", clues: ["Presiden ke-8 Indonesia", "Mantan Danjen Kopassus dan Menhan"] },
+            { target: "Mohammad Hatta", clues: ["Wakil Presiden Indonesia pertama", "Bapak Koperasi Indonesia"] },
+            { target: "Adam Malik", clues: ["Wakil Presiden ke-3 Indonesia", "Pernah menjabat Menteri Luar Negeri"] }
         ],
         menteri: [
             { target: "Sri Mulyani", clues: ["Menteri Keuangan Republik Indonesia", "Mantan Direktur Pelaksana Bank Dunia"] },
             { target: "Prabowo Subianto", clues: ["Mantan Menteri Pertahanan RI", "Pendiri Partai Gerindra"] },
             { target: "Erick Thohir", clues: ["Menteri Badan Usaha Milik Negara (BUMN)", "Ketua Umum PSSI"] },
             { target: "Bahlil Lahadalia", clues: ["Menteri Energi dan Sumber Daya Mineral (ESDM)", "Mantan Kepala BKPM"] },
-            { target: "Airlangga Hartarto", clues: ["Menteri Koordinator Bidang Perekonomian", "Tokoh politik senior Indonesia"] }
+            { target: "Airlangga Hartarto", clues: ["Menteri Koordinator Bidang Perekonomian", "Tokoh politik senior Indonesia"] },
+            { target: "Nadiem Makarim", clues: ["Mantan Mendikbudristek", "Pendiri platform Gojek"] },
+            { target: "Retno Marsudi", clues: ["Mantan Menteri Luar Negeri wanita pertama RI", "Diplomat karir senior"] },
+            { target: "Luhut Binsar Pandjaitan", clues: ["Mantan Menko Marves", "Tokoh senior pemerintahan Indonesia"] },
+            { target: "Sandiaga Uno", clues: ["Mantan Menparekraf", "Seorang pengusaha nasional"] },
+            { target: "AHY", clues: ["Menteri ATR/BPN", "Putra sulung Susilo Bambang Yudhoyono"] }
         ],
         pahlawan: [
             { target: "Diponegoro", clues: ["Pahlawan dari Jawa Tengah", "Memimpin Perang Jawa melawan Belanda"] },
             { target: "Cut Nyak Dhien", clues: ["Pahlawan wanita dari Aceh", "Berjuang gigih melawan penjajah Belanda"] },
             { target: "Ki Hajar Dewantara", clues: ["Bapak Pendidikan Nasional Indonesia", "Pendiri Perguruan Taman Siswa"] },
             { target: "Gajah Mada", clues: ["Panglima perang Kerajaan Majapahit", "Terkenal dengan Sumpah Palapa"] },
-            { target: "Kartini", clues: ["Pahlawan emansipasi wanita Indonesia", "Penulis buku 'Habis Gelap Terbitlah Terang'"] }
+            { target: "Kartini", clues: ["Pahlawan emansipasi wanita Indonesia", "Penulis buku 'Habis Gelap Terbitlah Terang'"] },
+            { target: "Pattimura", clues: ["Pahlawan nasional dari Maluku", "Gambar wajahnya pernah ada di uang Rp 1.000"] },
+            { target: "Sisingamangaraja", clues: ["Raja sekaligus pahlawan dari Sumatra Utara", "Raja Batak ke-XII"] },
+            { target: "Bung Tomo", clues: ["Tokoh pengobar semangat dalam Pertempuran 10 November", "Pahlawan dari Surabaya"] },
+            { target: "Jenderal Soedirman", clues: ["Panglima besar TNI pertama", "Terkenal dengan taktik perang gerilya"] },
+            { target: "I Gusti Ngurah Rai", clues: ["Pahlawan nasional dari Bali", "Memimpin perang Puputan Margarana"] }
         ]
     };
 
@@ -268,6 +289,7 @@
 
     function startGame(category) {
         currentCategory = category;
+        // Acak urutan soal setiap kali game dimulai
         currentQuestions = [...database[category]].sort(() => Math.random() - 0.5);
         currentIndex = 0;
         score = 0;
@@ -282,7 +304,7 @@
 
     function loadQuestion() {
         if (currentIndex >= currentQuestions.length) {
-            alert(`Selamat! Permainan Selesai.\nSkor Akhir Anda: ${score}`);
+            alert(`Selamat! Anda telah menyelesaikan semua soal di kategori ini.\nSkor Akhir Anda: ${score}`);
             backToMenu();
             return;
         }
@@ -291,6 +313,7 @@
         timer = 30;
         hintsLeft = 2;
         
+        document.getElementById('question-number').innerText = `${currentIndex + 1}/${currentQuestions.length}`;
         document.getElementById('timer').innerText = timer;
         document.getElementById('hint-count').innerText = hintsLeft;
         document.getElementById('answer-input').value = "";
@@ -317,8 +340,8 @@
 
         if (!input) return;
 
-        // Validasi jawaban (pencocokan kata sederhana)
-        if (input === target || (target.includes(input) && input.length >= 4)) {
+        // Pencocokan jawaban
+        if (input === target || (target.includes(input) && input.length >= 3)) {
             clearInterval(timerInterval);
             playSound('correct');
             score += timer * 10;
