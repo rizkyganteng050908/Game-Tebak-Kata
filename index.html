@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Tebak Figur & Hewan Indonesia</title>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text: #f8fafc;
+            --accent: #f59e0b;
+            --danger: #ef4444;
+            --success: #22c55e;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            width: 100%;
+            max-width: 600px;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+
+        .category-select {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        button:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        button:disabled {
+            background-color: #475569;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            background: #334155;
+            padding: 10px 15px;
+            border-radius: 8px;
+        }
+
+        .category-badge {
+            background: var(--accent);
+            color: #000;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        .clue-box {
+            background-color: #0f172a;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--accent);
+            text-align: left;
+            min-height: 80px;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 12px;
+            border-radius: 8px;
+            border: 2px solid #475569;
+            background-color: #0f172a;
+            color: white;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--primary);
+        }
+
+        .action-btns {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .btn-hint {
+            background-color: #d97706;
+            flex: 1;
+        }
+
+        .btn-skip {
+            background-color: #64748b;
+            flex: 1;
+        }
+
+        .feedback {
+            font-weight: bold;
+            font-size: 1.1rem;
+            min-height: 25px;
+            margin-bottom: 15px;
+        }
+
+        .success { color: var(--success); }
+        .error { color: var(--danger); }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Tebak Cepat Indonesia</h1>
+
+    <!-- Menus Utama / Pilih Kategori -->
+    <div id="menu-screen">
+        <p style="margin-bottom: 20px;">Pilih kategori game untuk memulai:</p>
+        <div class="category-select">
+            <button onclick="startGame('hewan')">🐾 Hewan</button>
+            <button onclick="startGame('presiden')">🇮🇩 Presiden RI</button>
+            <button onclick="startGame('menteri')">🏛️ Menteri RI</button>
+            <button onclick="startGame('pahlawan')">🎖️ Pahlawan</button>
+        </div>
+    </div>
+
+    <!-- Area Game -->
+    <div id="game-screen" class="hidden">
+        <div class="game-header">
+            <span class="category-badge" id="category-title">Kategori</span>
+            <div>Skor: <strong id="score">0</strong></div>
+            <div>Waktu: <strong id="timer">30</strong>s</div>
+        </div>
+
+        <div class="clue-box">
+            <strong>Petunjuk:</strong>
+            <p id="clue-text" style="margin-top: 5px;">-</p>
+        </div>
+
+        <div class="input-group">
+            <input type="text" id="answer-input" placeholder="Ketik jawaban di sini..." autocomplete="off">
+            <button onclick="checkAnswer()">Jawab</button>
+        </div>
+
+        <div class="action-btns">
+            <button class="btn-hint" onclick="useHint()">💡 Petunjuk Huruf (<span id="hint-count">2</span>)</button>
+            <button class="btn-skip" onclick="nextQuestion()">➡️ Lewati</button>
+        </div>
+
+        <div class="feedback" id="feedback"></div>
+
+        <button onclick="backToMenu()" style="background: transparent; color: #94a3b8; text-decoration: underline; width: 100%;">Kembali ke Menu Utama</button>
+    </div>
+</div>
+
+<script>
+    // Database Soal
+    const database = {
+        hewan: [
+            { target: "Komodo", clues: ["Kadal terbesar di dunia", "Endemik dari Nusa Tenggara Timur", "Memiliki gigitan beracun"] },
+            { target: "Harimau Sumatra", clues: ["Kucing besar endemik pulau Sumatra", "Memiliki garis-garis hitam tebal", "Statusnya sangat terancam punah"] },
+            { target: "Orangutan", clues: ["Kera besar berambut kemerahan", "Banyak ditemukan di Kalimantan dan Sumatra", "Memiliki kecerdasan tinggi"] },
+            { target: "Cenderawasih", clues: ["Burung indah yang dijuluki Burung Surga", "Berasal dari wilayah Papua", "Ekor jantannya sangat berbulu indah"] },
+            { target: "Anoa", clues: ["Mamalia mirip kerbau berukuran kerdil", "Endemik pulau Sulawesi", "Hidup di dalam hutan hujan"] }
+        ],
+        presiden: [
+            { target: "Soekarno", clues: ["Presiden Indonesia pertama", "Bapak Proklamator Indonesia", "Terkenal dengan sebutan Bung Karno"] },
+            { target: "Soeharto", clues: ["Presiden ke-2 Indonesia", "Memimpin pada masa Orde Baru", "Dijuluki Bapak Pembangunan"] },
+            { target: "B.J. Habibie", clues: ["Presiden ke-3 Indonesia", "Ahli teknologi penerbangan nasional", "Pernah menjabat Menteri Ristek"] },
+            { target: "Abdurrahman Wahid", clues: ["Presiden ke-4 Indonesia", "Akrab disapa Gus Dur", "Tokoh ulama dan mantan ketua NU"] },
+            { target: "Joko Widodo", clues: ["Presiden ke-7 Indonesia", "Akrab dipanggil Jokowi", "Mantan Wali Kota Surakarta dan Gubernur DKI"] }
+        ],
+        menteri: [
+            { target: "Sri Mulyani", clues: ["Pernah menjabat Menteri Keuangan RI", "Mantan Direktur Pelaksana Bank Dunia", "Dikenal ahli dalam ekonomi makro"] },
+            { target: "Prabowo Subianto", clues: ["Pernah menjabat Menteri Pertahanan RI", "Mantan Danjen Kopassus", "Pendiri Partai Gerindra"] },
+            { target: "Erick Thohir", clues: ["Pernah menjabat Menteri BUMN", "Ketua Umum PSSI", "Pendiri Mahaka Group"] },
+            { target: "Nadiem Makarim", clues: ["Pernah menjabat Menteri Pendidikan, Kebudayaan, Riset, dan Teknologi", "Pendiri startup Gojek", "Mencetuskan program Merdeka Belajar"] },
+            { target: "Retno Marsudi", clues: ["Pernah menjabat Menteri Luar Negeri perempuan pertama RI", "Diplomat karir Indonesia", "Aktif menyuarakan isu Palestina"] }
+        ],
+        pahlawan: [
+            { target: "Diponegoro", clues: ["Pahlawan dari Jawa Tengah", "Memimpin perang besar melawan Belanda (1825–1830)", "Identik dengan sorban dan kuda putih"] },
+            { target: "Cut Nyak Dhien", clues: ["Pahlawan wanita dari Aceh", "Berjuang melawan Belanda di perang Aceh", "Istri dari Teuku Umar"] },
+            { target: "Ki Hajar Dewantara", clues: ["Bapak Pendidikan Nasional", "Pendiri Taman Siswa", "Semboyan: Tut Wuri Handayani"] },
+            { target: "Gajah Mada", clues: ["Pahlawan/Panglima perang Kerajaan Majapahit", "Terkenal dengan Sumpah Palapa", "Menyatu-padukan wilayah Nusantara"] },
+            { target: "R.A. Kartini", clues: ["Pahlawan emansipasi wanita", "Penulis buku 'Habis Gelap Terbitlah Terang'", "Berasal dari Jepara"] }
+        ]
+    };
+
+    // Game Variables
+    let currentCategory = "";
+    let currentQuestions = [];
+    let currentIndex = 0;
+    let score = 0;
+    let timer = 30;
+    let timerInterval = null;
+    let hintsLeft = 2;
+
+    // Web Audio Synthesizer
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    function playSound(type) {
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        if (type === 'correct') {
+            osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); // C5
+            osc.frequency.exponentialRampToValueAtTime(659.25, audioCtx.currentTime + 0.15); // E5
+            gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+            gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.3);
+        } else if (type === 'wrong') {
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(200, audioCtx.currentTime);
+            osc.frequency.linearRampToValueAtTime(100, audioCtx.currentTime + 0.2);
+            gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+            gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.2);
+        }
+    }
+
+    function startGame(category) {
+        currentCategory = category;
+        currentQuestions = [...database[category]].sort(() => Math.random() - 0.5);
+        currentIndex = 0;
+        score = 0;
+        
+        document.getElementById('category-title').innerText = category.toUpperCase();
+        document.getElementById('menu-screen').classList.add('hidden');
+        document.getElementById('game-screen').classList.remove('hidden');
+        document.getElementById('score').innerText = score;
+        
+        loadQuestion();
+    }
+
+    function loadQuestion() {
+        if (currentIndex >= currentQuestions.length) {
+            alert(`Permainan Selesai!\nSkor Akhir Anda: ${score}`);
+            backToMenu();
+            return;
+        }
+
+        clearInterval(timerInterval);
+        timer = 30;
+        hintsLeft = 2;
+        
+        document.getElementById('timer').innerText = timer;
+        document.getElementById('hint-count').innerText = hintsLeft;
+        document.getElementById('answer-input').value = "";
+        document.getElementById('feedback').innerText = "";
+        
+        const q = currentQuestions[currentIndex];
+        document.getElementById('clue-text').innerText = q.clues[0];
+
+        timerInterval = setInterval(() => {
+            timer--;
+            document.getElementById('timer').innerText = timer;
+            if (timer <= 0) {
+                clearInterval(timerInterval);
+                playSound('wrong');
+                showFeedback("Waktu Habis! Jawaban: " + q.target, false);
+                setTimeout(nextQuestion, 2000);
+            }
+        }, 1000);
+    }
+
+    function checkAnswer() {
+        const input = document.getElementById('answer-input').value.trim().toLowerCase();
+        const target = currentQuestions[currentIndex].target.toLowerCase();
+
+        if (!input) return;
+
+        if (input === target || target.includes(input) && input.length > 3) {
+            clearInterval(timerInterval);
+            playSound('correct');
+            score += timer * 10;
+            document.getElementById('score').innerText = score;
+            showFeedback("Jawaban Benar! 🎉", true);
+            setTimeout(nextQuestion, 1500);
+        } else {
+            playSound('wrong');
+            showFeedback("Jawaban Salah, coba lagi!", false);
+        }
+    }
+
+    function useHint() {
+        if (hintsLeft <= 0) return;
+        const q = currentQuestions[currentIndex];
+        hintsLeft--;
+        document.getElementById('hint-count').innerText = hintsLeft;
+
+        if (hintsLeft === 1 && q.clues[1]) {
+            document.getElementById('clue-text').innerText += " | " + q.clues[1];
+        } else {
+            // Berikan pola huruf
+            const mask = q.target.replace(/[a-zA-Z]/g, (char, index) => index % 2 === 0 ? char : '_');
+            document.getElementById('clue-text').innerText += ` | Pola: ${mask}`;
+        }
+    }
+
+    function showFeedback(text, isSuccess) {
+        const fb = document.getElementById('feedback');
+        fb.innerText = text;
+        fb.className = "feedback " + (isSuccess ? "success" : "error");
+    }
+
+    function nextQuestion() {
+        currentIndex++;
+        loadQuestion();
+    }
+
+    function backToMenu() {
+        clearInterval(timerInterval);
+        document.getElementById('game-screen').classList.add('hidden');
+        document.getElementById('menu-screen').classList.remove('hidden');
+    }
+
+    // Enter Key Listener
+    document.getElementById('answer-input').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            checkAnswer();
+        }
+    });
+</script>
+
+</body>
+</html>
