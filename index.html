@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Tebak Figur & Hewan Indonesia</title>
+    <title>Game Tebak Kata Indonesia</title>
     <style>
         :root {
             --primary: #4f46e5;
@@ -71,12 +71,6 @@
         button:hover {
             background-color: var(--primary-hover);
             transform: translateY(-2px);
-        }
-
-        button:disabled {
-            background-color: #475569;
-            cursor: not-allowed;
-            transform: none;
         }
 
         .game-header {
@@ -163,9 +157,9 @@
 <div class="container">
     <h1>Tebak Cepat Indonesia</h1>
 
-    <!-- Menus Utama / Pilih Kategori -->
+    <!-- Menu Utama -->
     <div id="menu-screen">
-        <p style="margin-bottom: 20px;">Pilih kategori game untuk memulai:</p>
+        <p style="margin-bottom: 20px;">Pilih kategori untuk memulai permainan:</p>
         <div class="category-select">
             <button onclick="startGame('hewan')">🐾 Hewan</button>
             <button onclick="startGame('presiden')">🇮🇩 Presiden RI</button>
@@ -174,7 +168,7 @@
         </div>
     </div>
 
-    <!-- Area Game -->
+    <!-- Area Permainan -->
     <div id="game-screen" class="hidden">
         <div class="game-header">
             <span class="category-badge" id="category-title">Kategori</span>
@@ -193,7 +187,7 @@
         </div>
 
         <div class="action-btns">
-            <button class="btn-hint" onclick="useHint()">💡 Petunjuk Huruf (<span id="hint-count">2</span>)</button>
+            <button class="btn-hint" onclick="useHint()">💡 Petunjuk (<span id="hint-count">2</span>)</button>
             <button class="btn-skip" onclick="nextQuestion()">➡️ Lewati</button>
         </div>
 
@@ -204,39 +198,39 @@
 </div>
 
 <script>
-    // Database Soal
+    // Database Soal & Petunjuk
     const database = {
         hewan: [
-            { target: "Komodo", clues: ["Kadal terbesar di dunia", "Endemik dari Nusa Tenggara Timur", "Memiliki gigitan beracun"] },
-            { target: "Harimau Sumatra", clues: ["Kucing besar endemik pulau Sumatra", "Memiliki garis-garis hitam tebal", "Statusnya sangat terancam punah"] },
-            { target: "Orangutan", clues: ["Kera besar berambut kemerahan", "Banyak ditemukan di Kalimantan dan Sumatra", "Memiliki kecerdasan tinggi"] },
-            { target: "Cenderawasih", clues: ["Burung indah yang dijuluki Burung Surga", "Berasal dari wilayah Papua", "Ekor jantannya sangat berbulu indah"] },
-            { target: "Anoa", clues: ["Mamalia mirip kerbau berukuran kerdil", "Endemik pulau Sulawesi", "Hidup di dalam hutan hujan"] }
+            { target: "Komodo", clues: ["Kadal terbesar di dunia", "Endemik dari Nusa Tenggara Timur"] },
+            { target: "Harimau Sumatra", clues: ["Kucing besar endemik pulau Sumatra", "Memiliki garis-garis hitam tebal"] },
+            { target: "Orangutan", clues: ["Kera besar berambut kemerahan", "Banyak ditemukan di Kalimantan dan Sumatra"] },
+            { target: "Cenderawasih", clues: ["Burung indah dijuluki Burung Surga", "Berasal dari wilayah Papua"] },
+            { target: "Anoa", clues: ["Mamalia mirip kerbau berukuran kecil", "Endemik pulau Sulawesi"] }
         ],
         presiden: [
-            { target: "Soekarno", clues: ["Presiden Indonesia pertama", "Bapak Proklamator Indonesia", "Terkenal dengan sebutan Bung Karno"] },
-            { target: "Soeharto", clues: ["Presiden ke-2 Indonesia", "Memimpin pada masa Orde Baru", "Dijuluki Bapak Pembangunan"] },
-            { target: "B.J. Habibie", clues: ["Presiden ke-3 Indonesia", "Ahli teknologi penerbangan nasional", "Pernah menjabat Menteri Ristek"] },
-            { target: "Abdurrahman Wahid", clues: ["Presiden ke-4 Indonesia", "Akrab disapa Gus Dur", "Tokoh ulama dan mantan ketua NU"] },
-            { target: "Joko Widodo", clues: ["Presiden ke-7 Indonesia", "Akrab dipanggil Jokowi", "Mantan Wali Kota Surakarta dan Gubernur DKI"] }
+            { target: "Soekarno", clues: ["Presiden Indonesia pertama", "Bapak Proklamator Indonesia"] },
+            { target: "Soeharto", clues: ["Presiden ke-2 Indonesia", "Memimpin pada masa Orde Baru"] },
+            { target: "BJ Habibie", clues: ["Presiden ke-3 Indonesia", "Ahli teknologi penerbangan nasional"] },
+            { target: "Gus Dur", clues: ["Presiden ke-4 Indonesia", "Nama aslinya Abdurrahman Wahid"] },
+            { target: "Joko Widodo", clues: ["Presiden ke-7 Indonesia", "Akrab dipanggil Jokowi"] }
         ],
         menteri: [
-            { target: "Sri Mulyani", clues: ["Pernah menjabat Menteri Keuangan RI", "Mantan Direktur Pelaksana Bank Dunia", "Dikenal ahli dalam ekonomi makro"] },
-            { target: "Prabowo Subianto", clues: ["Pernah menjabat Menteri Pertahanan RI", "Mantan Danjen Kopassus", "Pendiri Partai Gerindra"] },
-            { target: "Erick Thohir", clues: ["Pernah menjabat Menteri BUMN", "Ketua Umum PSSI", "Pendiri Mahaka Group"] },
-            { target: "Nadiem Makarim", clues: ["Pernah menjabat Menteri Pendidikan, Kebudayaan, Riset, dan Teknologi", "Pendiri startup Gojek", "Mencetuskan program Merdeka Belajar"] },
-            { target: "Retno Marsudi", clues: ["Pernah menjabat Menteri Luar Negeri perempuan pertama RI", "Diplomat karir Indonesia", "Aktif menyuarakan isu Palestina"] }
+            { target: "Sri Mulyani", clues: ["Menteri Keuangan Republik Indonesia", "Mantan Direktur Pelaksana Bank Dunia"] },
+            { target: "Prabowo Subianto", clues: ["Mantan Menteri Pertahanan RI", "Pendiri Partai Gerindra"] },
+            { target: "Erick Thohir", clues: ["Menteri Badan Usaha Milik Negara (BUMN)", "Ketua Umum PSSI"] },
+            { target: "Bahlil Lahadalia", clues: ["Menteri Energi dan Sumber Daya Mineral (ESDM)", "Mantan Kepala BKPM"] },
+            { target: "Airlangga Hartarto", clues: ["Menteri Koordinator Bidang Perekonomian", "Tokoh politik senior Indonesia"] }
         ],
         pahlawan: [
-            { target: "Diponegoro", clues: ["Pahlawan dari Jawa Tengah", "Memimpin perang besar melawan Belanda (1825–1830)", "Identik dengan sorban dan kuda putih"] },
-            { target: "Cut Nyak Dhien", clues: ["Pahlawan wanita dari Aceh", "Berjuang melawan Belanda di perang Aceh", "Istri dari Teuku Umar"] },
-            { target: "Ki Hajar Dewantara", clues: ["Bapak Pendidikan Nasional", "Pendiri Taman Siswa", "Semboyan: Tut Wuri Handayani"] },
-            { target: "Gajah Mada", clues: ["Pahlawan/Panglima perang Kerajaan Majapahit", "Terkenal dengan Sumpah Palapa", "Menyatu-padukan wilayah Nusantara"] },
-            { target: "R.A. Kartini", clues: ["Pahlawan emansipasi wanita", "Penulis buku 'Habis Gelap Terbitlah Terang'", "Berasal dari Jepara"] }
+            { target: "Diponegoro", clues: ["Pahlawan dari Jawa Tengah", "Memimpin Perang Jawa melawan Belanda"] },
+            { target: "Cut Nyak Dhien", clues: ["Pahlawan wanita dari Aceh", "Berjuang gigih melawan penjajah Belanda"] },
+            { target: "Ki Hajar Dewantara", clues: ["Bapak Pendidikan Nasional Indonesia", "Pendiri Perguruan Taman Siswa"] },
+            { target: "Gajah Mada", clues: ["Panglima perang Kerajaan Majapahit", "Terkenal dengan Sumpah Palapa"] },
+            { target: "Kartini", clues: ["Pahlawan emansipasi wanita Indonesia", "Penulis buku 'Habis Gelap Terbitlah Terang'"] }
         ]
     };
 
-    // Game Variables
+    // Variabel Permainan
     let currentCategory = "";
     let currentQuestions = [];
     let currentIndex = 0;
@@ -245,7 +239,7 @@
     let timerInterval = null;
     let hintsLeft = 2;
 
-    // Web Audio Synthesizer
+    // Suara Sederhana dengan Web Audio API
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     function playSound(type) {
         if (audioCtx.state === 'suspended') audioCtx.resume();
@@ -255,8 +249,8 @@
         gain.connect(audioCtx.destination);
 
         if (type === 'correct') {
-            osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); // C5
-            osc.frequency.exponentialRampToValueAtTime(659.25, audioCtx.currentTime + 0.15); // E5
+            osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(659.25, audioCtx.currentTime + 0.15);
             gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
             gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
             osc.start();
@@ -288,7 +282,7 @@
 
     function loadQuestion() {
         if (currentIndex >= currentQuestions.length) {
-            alert(`Permainan Selesai!\nSkor Akhir Anda: ${score}`);
+            alert(`Selamat! Permainan Selesai.\nSkor Akhir Anda: ${score}`);
             backToMenu();
             return;
         }
@@ -323,7 +317,8 @@
 
         if (!input) return;
 
-        if (input === target || target.includes(input) && input.length > 3) {
+        // Validasi jawaban (pencocokan kata sederhana)
+        if (input === target || (target.includes(input) && input.length >= 4)) {
             clearInterval(timerInterval);
             playSound('correct');
             score += timer * 10;
@@ -345,9 +340,8 @@
         if (hintsLeft === 1 && q.clues[1]) {
             document.getElementById('clue-text').innerText += " | " + q.clues[1];
         } else {
-            // Berikan pola huruf
             const mask = q.target.replace(/[a-zA-Z]/g, (char, index) => index % 2 === 0 ? char : '_');
-            document.getElementById('clue-text').innerText += ` | Pola: ${mask}`;
+            document.getElementById('clue-text').innerText += ` | Bocoran: ${mask}`;
         }
     }
 
@@ -368,7 +362,6 @@
         document.getElementById('menu-screen').classList.remove('hidden');
     }
 
-    // Enter Key Listener
     document.getElementById('answer-input').addEventListener('keypress', function (e) {
         if (e.key === 'Enter') {
             checkAnswer();
