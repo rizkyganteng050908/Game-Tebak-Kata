@@ -73,6 +73,16 @@
             transform: translateY(-2px);
         }
 
+        .btn-add {
+            background-color: #059669;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .btn-add:hover {
+            background-color: #047857;
+        }
+
         .game-header {
             display: flex;
             justify-content: space-between;
@@ -108,8 +118,8 @@
             margin-bottom: 15px;
         }
 
-        input[type="text"] {
-            flex: 1;
+        input[type="text"], select {
+            width: 100%;
             padding: 12px;
             border-radius: 8px;
             border: 2px solid #475569;
@@ -119,7 +129,7 @@
             outline: none;
         }
 
-        input[type="text"]:focus {
+        input[type="text"]:focus, select:focus {
             border-color: var(--primary);
         }
 
@@ -129,15 +139,8 @@
             margin-bottom: 20px;
         }
 
-        .btn-hint {
-            background-color: #d97706;
-            flex: 1;
-        }
-
-        .btn-skip {
-            background-color: #64748b;
-            flex: 1;
-        }
+        .btn-hint { background-color: #d97706; flex: 1; }
+        .btn-skip { background-color: #64748b; flex: 1; }
 
         .feedback {
             font-weight: bold;
@@ -148,6 +151,36 @@
 
         .success { color: var(--success); }
         .error { color: var(--danger); }
+
+        /* Modal Custom */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex; justify-content: center; align-items: center;
+            padding: 20px;
+            z-index: 100;
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            padding: 25px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 450px;
+            text-align: left;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            color: #cbd5e1;
+        }
 
         .hidden { display: none !important; }
     </style>
@@ -166,6 +199,7 @@
             <button onclick="startGame('menteri')">🏛️ Menteri RI</button>
             <button onclick="startGame('pahlawan')">🎖️ Pahlawan</button>
         </div>
+        <button class="btn-add" onclick="openAddModal()">➕ Tambah Soal Sendiri</button>
     </div>
 
     <!-- Area Permainan -->
@@ -198,66 +232,66 @@
     </div>
 </div>
 
+<!-- Modal Tambah Soal -->
+<div id="add-modal" class="modal-overlay hidden">
+    <div class="modal-content">
+        <h2 style="margin-bottom: 15px; color: var(--accent);">Tambah Soal Baru</h2>
+        <form id="add-question-form" onsubmit="saveCustomQuestion(event)">
+            <div class="form-group">
+                <label>Kategori:</label>
+                <select id="new-category" required>
+                    <option value="hewan">Hewan</option>
+                    <option value="presiden">Presiden & Wapres</option>
+                    <option value="menteri">Menteri RI</option>
+                    <option value="pahlawan">Pahlawan</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Jawaban Utama (Target):</label>
+                <input type="text" id="new-target" placeholder="Contoh: Kucing" required>
+            </div>
+            <div class="form-group">
+                <label>Alias/Variasi Jawaban (pisahkan dengan koma):</label>
+                <input type="text" id="new-aliases" placeholder="Contoh: kucing, mpus, cat" required>
+            </div>
+            <div class="form-group">
+                <label>Petunjuk Utama (Clue 1):</label>
+                <input type="text" id="new-clue1" placeholder="Contoh: Suaranya meong" required>
+            </div>
+            <div class="form-group">
+                <label>Petunjuk Tambahan (Clue 2 - Opsional):</label>
+                <input type="text" id="new-clue2" placeholder="Contoh: Suka makan ikan">
+            </div>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button type="submit" style="flex: 1; background-color: var(--success);">Simpan</button>
+                <button type="button" onclick="closeAddModal()" style="flex: 1; background-color: var(--danger);">Batal</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <script>
-    const database = {
+    const defaultDatabase = {
         hewan: [
             { target: "Komodo", aliases: ["komodo"], clues: ["Kadal terbesar di dunia", "Endemik dari Nusa Tenggara Timur"] },
             { target: "Harimau Sumatra", aliases: ["harimau sumatra", "harimau sumatera", "harimau"], clues: ["Kucing besar endemik pulau Sumatra", "Memiliki garis-garis hitam tebal"] },
-            { target: "Orangutan", aliases: ["orangutan", "orang utan"], clues: ["Kera besar berambut kemerahan", "Banyak ditemukan di Kalimantan dan Sumatra"] },
-            { target: "Cenderawasih", aliases: ["cenderawasih", "cendrawasih"], clues: ["Burung indah dijuluki Burung Surga", "Berasal dari wilayah Papua"] },
-            { target: "Anoa", aliases: ["anoa"], clues: ["Mamalia mirip kerbau berukuran kecil", "Endemik pulau Sulawesi"] },
-            { target: "Bekantan", aliases: ["bekantan"], clues: ["Monyet berhidung panjang dan besar", "Endemik pulau Kalimantan"] },
-            { target: "Gajah Sumatra", aliases: ["gajah sumatra", "gajah sumatera"], clues: ["Subspesies gajah asia yang hidup di Sumatra", "Berukuran sedikit lebih kecil dari gajah asia umumnya"] },
-            { target: "Badak Jawa", aliases: ["badak jawa", "badak bercula satu"], clues: ["Hewan langka bercula satu", "Banyak dilindungi di Ujung Kulon"] },
-            { target: "Tarsius", aliases: ["tarsius"], clues: ["Mamalia kecil bermata sangat besar", "Hewan nokturnal asal Sulawesi"] },
-            { target: "Jalak Bali", aliases: ["jalak bali", "burung jalak bali"], clues: ["Burung pengicau berwarna putih bersih", "Endemik pulau Bali"] },
             { target: "Gajah", aliases: ["gajah"], clues: ["Memiliki belalai yang panjang", "Memiliki gading putih di dekat mulutnya"] }
         ],
         presiden: [
             { target: "Soekarno", aliases: ["soekarno", "sukarno", "bung karno"], clues: ["Presiden Indonesia pertama", "Bapak Proklamator Indonesia"] },
-            { target: "Soeharto", aliases: ["soeharto", "suharto", "pak harto"], clues: ["Presiden ke-2 Indonesia", "Memimpin pada masa Orde Baru"] },
-            { target: "BJ Habibie", aliases: ["bj habibie", "habibie", "b.j. habibie"], clues: ["Presiden ke-3 Indonesia", "Ahli teknologi penerbangan nasional"] },
-            { target: "Gus Dur", aliases: ["gus dur", "abdurrahman wahid", "gusdur"], clues: ["Presiden ke-4 Indonesia", "Bapak Pluralisme Indonesia"] },
-            { target: "Megawati Soekarnoputri", aliases: ["megawati", "megawati soekarnoputri", "mega"], clues: ["Presiden ke-5 Indonesia", "Presiden wanita pertama di Indonesia"] },
-            { target: "Susilo Bambang Yudhoyono", aliases: ["susilo bambang yudhoyono", "sby"], clues: ["Presiden ke-6 Indonesia", "Presiden pertama yang dipilih langsung lewat pemilu"] },
-            { target: "Joko Widodo", aliases: ["joko widodo", "jokowi"], clues: ["Presiden ke-7 Indonesia", "Mantan Gubernur DKI Jakarta dan Wali Kota Surakarta"] },
-            { target: "Prabowo Subianto", aliases: ["prabowo", "prabowo subianto"], clues: ["Presiden ke-8 Indonesia", "Mantan Danjen Kopassus dan Menhan RI"] },
-            { target: "Mohammad Hatta", aliases: ["mohammad hatta", "bung hatta", "moch hatta"], clues: ["Wakil Presiden Indonesia pertama", "Bapak Koperasi Indonesia"] },
-            { target: "Adam Malik", aliases: ["adam malik"], clues: ["Wakil Presiden ke-3 Indonesia", "Pernah menjabat Menteri Luar Negeri dan Ketua DPR"] },
-            { target: "Hamengkubuwono IX", aliases: ["hamengkubuwono ix", "sultan hamengkubuwono ix"], clues: ["Wakil Presiden ke-2 Indonesia", "Sultan Yogyakarta dan Bapak Pramuka Indonesia"] },
-            { target: "Jusuf Kalla", aliases: ["jusuf kalla", "jk"], clues: ["Wakil Presiden RI yang menjabat 2 kali di periode berbeda", "Mendampingi SBY dan Jokowi"] },
-            { target: "Ma'ruf Amin", aliases: ["ma'ruf amin", "maruf amin"], clues: ["Wakil Presiden ke-13 Indonesia", "Mantan Ketua Umum Majelis Ulama Indonesia (MUI)"] },
-            { target: "Gibran Rakabuming Raka", aliases: ["gibran", "gibran rakabuming", "gibran rakabuming raka"], clues: ["Wakil Presiden ke-14 Indonesia", "Wakil Presiden termuda dalam sejarah Indonesia"] }
+            { target: "Joko Widodo", aliases: ["joko widodo", "jokowi"], clues: ["Presiden ke-7 Indonesia", "Mantan Gubernur DKI Jakarta dan Wali Kota Surakarta"] }
         ],
         menteri: [
             { target: "Sri Mulyani", aliases: ["sri mulyani", "sri mulyani indrawati"], clues: ["Menteri Keuangan Republik Indonesia di beberapa era", "Mantan Direktur Pelaksana Bank Dunia"] },
-            { target: "Erick Thohir", aliases: ["erick thohir", "erik thohir"], clues: ["Menteri BUMN Indonesia", "Ketua Umum PSSI periode 2023–2027"] },
-            { target: "Bahlil Lahadalia", aliases: ["bahlil", "bahlil lahadalia"], clues: ["Menteri ESDM RI", "Mantan Kepala BKPM dan Tokoh HIPMI"] },
-            { target: "Airlangga Hartarto", aliases: ["airlangga", "airlangga hartarto"], clues: ["Menteri Koordinator Bidang Perekonomian RI", "Mantan Ketua Umum Partai Golkar"] },
-            { target: "Nadiem Makarim", aliases: ["nadiem", "nadiem makarim"], clues: ["Mantan Mendikbudristek RI", "Pendiri platform Gojek"] },
-            { target: "Retno Marsudi", aliases: ["retno marsudi", "retno"], clues: ["Mantan Menteri Luar Negeri wanita pertama RI", "Diplomat senior Indonesia"] },
-            { target: "Luhut Binsar Pandjaitan", aliases: ["luhut", "luhut binsar pandjaitan", "luhut pandjaitan"], clues: ["Mantan Menko Marves", "Tokoh senior purnawirawan TNI dan pemerintahan"] },
-            { target: "Sandiaga Uno", aliases: ["sandiaga uno", "sandi uno"], clues: ["Mantan Menparekraf", "Pengusaha muda dan mantan Wagub DKI Jakarta"] },
-            { target: "AHY", aliases: ["ahy", "agus harimurti yudhoyono", "agus yudhoyono"], clues: ["Menteri ATR/BPN / Menko Infrastruktur", "Putra sulung Presiden Susilo Bambang Yudhoyono"] },
-            { target: "Basuki Hadimuljono", aliases: ["basuki hadimuljono", "pak bas", "basuki"], clues: ["Mantan Menteri PUPR yang identik dengan gaya nyentrik", "Sering memegang kamera fotografer di ajang internasional"] },
-            { target: "Susi Pudjiastuti", aliases: ["susi pudjiastuti", "bu susi"], clues: ["Mantan Menteri Kelautan dan Perikanan", "Terkenal dengan jargon 'Tenggelamkan!'"] },
-            { target: "Mahfud MD", aliases: ["mahfud md", "mahfud"], clues: ["Mantan Menko Polhukam RI", "Pernah menjabat Ketua Mahkamah Konstitusi"] },
-            { target: "Zulkifli Hasan", aliases: ["zulkifli hasan", "zulhas"], clues: ["Menteri Perdagangan / Menko Pangan RI", "Ketua Umum Partai Amanat Nasional (PAN)"] },
-            { target: "Tito Karnavian", aliases: ["tito karnavian", "tito"], clues: ["Menteri Dalam Negeri RI", "Mantan Kapolri"] }
+            { target: "Erick Thohir", aliases: ["erick thohir", "erik thohir"], clues: ["Menteri BUMN Indonesia", "Ketua Umum PSSI periode 2023–2027"] }
         ],
         pahlawan: [
-            { target: "Diponegoro", aliases: ["diponegoro", "pangeran diponegoro"], clues: ["Pahlawan dari Jawa Tengah", "Memimpin Perang Jawa melawan Belanda (1825–1830)"] },
-            { target: "Cut Nyak Dhien", aliases: ["cut nyak dhien", "cut nyak dien"], clues: ["Pahlawan wanita dari Aceh", "Berjuang gigih melawan penjajah Belanda"] },
-            { target: "Ki Hajar Dewantara", aliases: ["ki hajar dewantara"], clues: ["Bapak Pendidikan Nasional Indonesia", "Pendiri Perguruan Taman Siswa"] },
-            { target: "Gajah Mada", aliases: ["gajah mada"], clues: ["Panglima perang Kerajaan Majapahit", "Terkenal dengan Sumpah Palapa"] },
-            { target: "Kartini", aliases: ["kartini", "raden ajeng kartini", "r.a. kartini"], clues: ["Pahlawan emansipasi wanita Indonesia", "Penulis surat-surat 'Habis Gelap Terbitlah Terang'"] },
-            { target: "Pattimura", aliases: ["pattimura", "kapitan pattimura"], clues: ["Pahlawan nasional dari Maluku", "Gambar wajahnya pernah diabadikan di uang kertas Rp 1.000"] },
-            { target: "Sisingamangaraja", aliases: ["sisingamangaraja", "sisingamangaraja xii"], clues: ["Raja sekaligus pahlawan dari Sumatra Utara", "Raja Batak ke-XII"] },
-            { target: "Bung Tomo", aliases: ["bung tomo", "sutomo"], clues: ["Tokoh pengobar semangat dalam Pertempuran 10 November", "Pahlawan orator dari Surabaya"] },
-            { target: "Jenderal Soedirman", aliases: ["jenderal soedirman", "soedirman", "sudirman"], clues: ["Panglima besar TNI pertama", "Terkenal dengan taktik perang gerilya saat sakit"] },
-            { target: "I Gusti Ngurah Rai", aliases: ["i gusti ngurah rai", "ngurah rai"], clues: ["Pahlawan nasional dari Bali", "Memimpin perang Puputan Margarana"] }
+            { target: "Diponegoro", aliases: ["diponegoro", "pangeran diponegoro"], clues: ["Pahlawan dari Jawa Tengah", "Memimpin Perang Jawa melawan Belanda (1825–1830)"] }
         ]
     };
+
+    // Muat database dari LocalStorage jika ada
+    let database = JSON.parse(localStorage.getItem('custom_game_database')) || defaultDatabase;
 
     let currentCategory = "";
     let currentQuestions = [];
@@ -266,8 +300,6 @@
     let timer = 30;
     let timerInterval = null;
     let hintsLeft = 2;
-
-    // Audio Context dibuat secara lazy saat tombol pertama diklik
     let audioCtx = null;
 
     function initAudio() {
@@ -306,7 +338,7 @@
                 osc.stop(audioCtx.currentTime + 0.2);
             }
         } catch (e) {
-            console.log("Audio play blocked or not supported", e);
+            console.log("Audio play blocked", e);
         }
     }
 
@@ -345,7 +377,6 @@
         const q = currentQuestions[currentIndex];
         document.getElementById('clue-text').innerText = q.clues[0];
 
-        // Fokus ke input setelah modal siap
         setTimeout(() => {
             document.getElementById('answer-input').focus();
         }, 100);
@@ -413,6 +444,45 @@
         clearInterval(timerInterval);
         document.getElementById('game-screen').classList.add('hidden');
         document.getElementById('menu-screen').classList.remove('hidden');
+    }
+
+    // Modal Handlers
+    function openAddModal() {
+        document.getElementById('add-modal').classList.remove('hidden');
+    }
+
+    function closeAddModal() {
+        document.getElementById('add-modal').classList.add('hidden');
+        document.getElementById('add-question-form').reset();
+    }
+
+    function saveCustomQuestion(e) {
+        e.preventDefault();
+
+        const category = document.getElementById('new-category').value;
+        const target = document.getElementById('new-target').value.trim();
+        const aliasesRaw = document.getElementById('new-aliases').value;
+        const clue1 = document.getElementById('new-clue1').value.trim();
+        const clue2 = document.getElementById('new-clue2').value.trim();
+
+        const aliases = aliasesRaw.split(',').map(a => a.trim().toLowerCase()).filter(a => a.length > 0);
+        if (!aliases.includes(target.toLowerCase())) {
+            aliases.push(target.toLowerCase());
+        }
+
+        const clues = [clue1];
+        if (clue2) clues.push(clue2);
+
+        const newQuestion = { target, aliases, clues };
+
+        // Masukkan soal baru ke kategori yang dipilih
+        database[category].push(newQuestion);
+
+        // Simpan ke localStorage
+        localStorage.setItem('custom_game_database', JSON.stringify(database));
+
+        alert('Soal baru berhasil ditambahkan!');
+        closeAddModal();
     }
 
     document.getElementById('answer-input').addEventListener('keypress', function (e) {
