@@ -58,6 +58,33 @@ input[type=text]:focus{border-color:var(--primary)}
   .category-select{grid-template-columns:1fr}
   .input-group{flex-direction:column}
 }
+
+.add-question-btn{
+  margin-top:15px;background:#16a34a;width:100%;
+}
+.add-question-btn:hover{background:#15803d}
+.modal{
+  position:fixed;inset:0;background:rgba(0,0,0,.75);
+  display:flex;align-items:center;justify-content:center;
+  padding:15px;z-index:1000
+}
+.modal-box{
+  width:100%;max-width:500px;background:#1e293b;border-radius:14px;
+  padding:25px;box-shadow:0 15px 40px rgba(0,0,0,.6);text-align:left
+}
+.modal-box h2{text-align:center;margin-bottom:18px;color:#f59e0b}
+.form-group{margin-bottom:13px}
+.form-group label{display:block;margin-bottom:6px;font-weight:700}
+.form-group input,.form-group textarea,.form-group select{
+  width:100%;padding:11px;border-radius:7px;border:2px solid #475569;
+  background:#0f172a;color:#fff;font-size:1rem;outline:none
+}
+.form-group textarea{min-height:75px;resize:vertical}
+.modal-actions{display:flex;gap:10px;margin-top:18px}
+.modal-actions button{flex:1}
+.btn-cancel{background:#64748b}
+.add-success{color:#22c55e;text-align:center;margin-top:10px;font-weight:700}
+
 </style>
 </head>
 <body>
@@ -73,6 +100,7 @@ input[type=text]:focus{border-color:var(--primary)}
       <button type="button" onclick="startGame('menteri')">🏛️ Menteri RI</button>
       <button type="button" onclick="startGame('pahlawan')">🎖️ Pahlawan</button>
     </div>
+    <button type="button" class="add-question-btn" onclick="openAddQuestion()">➕ Tambah Soal</button>
   </div>
 
   <div id="game-screen" class="hidden">
@@ -110,7 +138,23 @@ const database = {
     {target:"Komodo",aliases:["komodo"],clues:["Kadal terbesar di dunia","Endemik dari Nusa Tenggara Timur"]},
     {target:"Harimau Sumatra",aliases:["harimau sumatra","harimau sumatera","harimau"],clues:["Kucing besar endemik Pulau Sumatra","Memiliki garis-garis hitam tebal"]},
     {target:"Orangutan",aliases:["orangutan","orang utan"],clues:["Primata yang hidup di hutan Indonesia","Banyak ditemukan di Kalimantan dan Sumatra"]},
-    {target:"Cenderawasih",aliases:["cenderawasih","burung cenderawasih"],clues:["Burung indah dari Papua","Dikenal sebagai burung surga"]}
+    {target:"Cenderawasih",aliases:["cenderawasih","burung cenderawasih"],clues:["Burung indah dari Papua","Dikenal sebagai burung surga"]},
+    {target:"Kura-kura",aliases:["kura-kura","kura kura"],clues:["Hewan yang membawa cangkang di tubuhnya","Berjalan dengan lambat"]},
+    {target:"Jerapah",aliases:["jerapah"],clues:["Hewan dengan leher yang sangat panjang","Banyak ditemukan di Afrika"]},
+    {target:"Gajah",aliases:["gajah"],clues:["Hewan besar dengan belalai","Memiliki telinga yang lebar"]},
+    {target:"Kucing",aliases:["kucing"],clues:["Hewan yang sering dipelihara di rumah","Suka mengeong"]},
+    {target:"Domba",aliases:["domba"],clues:["Hewan berbulu tebal","Menghasilkan wol"]},
+    {target:"Sapi",aliases:["sapi"],clues:["Hewan ternak pemakan rumput","Menghasilkan susu"]},
+    {target:"Kuda",aliases:["kuda"],clues:["Hewan yang sering digunakan untuk ditunggangi","Memiliki surai"]},
+    {target:"Harimau",aliases:["harimau"],clues:["Kucing besar pemakan daging","Memiliki belang hitam"]},
+    {target:"Singa",aliases:["singa"],clues:["Dikenal sebagai raja hutan","Singa jantan memiliki surai"]},
+    {target:"Macan",aliases:["macan"],clues:["Hewan pemakan daging dari keluarga kucing","Memiliki tubuh yang kuat dan lincah"]},
+    {target:"Burung",aliases:["burung"],clues:["Hewan yang memiliki sayap dan paruh","Banyak jenisnya dapat terbang"]},
+    {target:"Burung Beo",aliases:["burung beo","beo"],clues:["Burung yang terkenal dapat menirukan suara","Memiliki paruh yang kuat"]},
+    {target:"Burung Kakatua",aliases:["burung kakatua","kakatua"],clues:["Burung yang memiliki jambul di kepalanya","Terkenal dengan suaranya yang keras"]},
+    {target:"Burung Merak",aliases:["burung merak","merak"],clues:["Burung yang memiliki ekor sangat indah","Sering membuka ekornya seperti kipas"]},
+    {target:"Buaya",aliases:["buaya"],clues:["Reptil besar yang hidup di air dan darat","Memiliki rahang dan gigi yang kuat"]},
+    {target:"Serigala",aliases:["serigala"],clues:["Hewan pemakan daging yang hidup berkelompok","Mirip anjing tetapi hidup liar"]}
   ],
   presiden: [
     {target:"Soekarno",aliases:["soekarno","sukarno","bung karno"],clues:["Presiden Indonesia pertama","Bapak Proklamator Indonesia"]},
@@ -129,6 +173,15 @@ const database = {
     {target:"Ki Hajar Dewantara",aliases:["ki hajar dewantara","ki hajar"],clues:["Tokoh pendidikan Indonesia","Pendiri Perguruan Taman Siswa"]}
   ]
 };
+
+
+/* Soal tambahan disimpan di browser perangkat ini */
+const savedCustomQuestions = JSON.parse(localStorage.getItem("tebak_kata_custom_questions") || "{}");
+Object.keys(savedCustomQuestions).forEach(category => {
+  if (Array.isArray(savedCustomQuestions[category]) && database[category]) {
+    database[category].push(...savedCustomQuestions[category]);
+  }
+});
 
 let currentCategory="";
 let currentQuestions=[];
@@ -273,9 +326,108 @@ function backToMenu(){
   document.getElementById("menu-screen").classList.remove("hidden");
 }
 
+
+function openAddQuestion(){
+  document.getElementById("add-question-modal").classList.remove("hidden");
+  document.getElementById("add-success").textContent="";
+  document.getElementById("new-target").value="";
+  document.getElementById("new-aliases").value="";
+  document.getElementById("new-clue1").value="";
+  document.getElementById("new-clue2").value="";
+}
+
+function closeAddQuestion(){
+  document.getElementById("add-question-modal").classList.add("hidden");
+}
+
+function saveNewQuestion(){
+  const category=document.getElementById("new-category").value;
+  const target=document.getElementById("new-target").value.trim();
+  const aliasesText=document.getElementById("new-aliases").value.trim();
+  const clue1=document.getElementById("new-clue1").value.trim();
+  const clue2=document.getElementById("new-clue2").value.trim();
+
+  if(!target || !clue1){
+    alert("Jawaban dan Petunjuk 1 wajib diisi.");
+    return;
+  }
+
+  const aliases=aliasesText
+    ? aliasesText.split(",").map(x=>x.trim().toLowerCase()).filter(Boolean)
+    : [];
+
+  const targetNormalized=normalizeAnswer(target);
+  if(!aliases.includes(targetNormalized)) aliases.unshift(targetNormalized);
+
+  const newQuestion={
+    target:target,
+    aliases:aliases,
+    clues:clue2 ? [clue1,clue2] : [clue1]
+  };
+
+  database[category].push(newQuestion);
+
+  const saved=JSON.parse(localStorage.getItem("tebak_kata_custom_questions") || "{}");
+  if(!Array.isArray(saved[category])) saved[category]=[];
+  saved[category].push(newQuestion);
+  localStorage.setItem("tebak_kata_custom_questions",JSON.stringify(saved));
+
+  if(currentCategory===category) currentQuestions.push(newQuestion);
+
+  document.getElementById("add-success").textContent="✅ Soal berhasil ditambahkan dan disimpan!";
+  setTimeout(closeAddQuestion,900);
+}
+
+document.getElementById("add-question-modal").addEventListener("click",function(e){
+  if(e.target===this) closeAddQuestion();
+});
+
 document.getElementById("answer-input").addEventListener("keydown",function(e){
   if(e.key==="Enter") checkAnswer();
 });
 </script>
+
+<div id="add-question-modal" class="modal hidden">
+  <div class="modal-box">
+    <h2>➕ Tambah Soal</h2>
+
+    <div class="form-group">
+      <label for="new-category">Kategori</label>
+      <select id="new-category">
+        <option value="hewan">🐾 Hewan</option>
+        <option value="presiden">🇮🇩 Presiden & Wapres</option>
+        <option value="menteri">🏛️ Menteri RI</option>
+        <option value="pahlawan">🎖️ Pahlawan</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="new-target">Jawaban</label>
+      <input id="new-target" type="text" placeholder="Contoh: Gajah">
+    </div>
+
+    <div class="form-group">
+      <label for="new-aliases">Jawaban alternatif <small>(opsional, pisahkan dengan koma)</small></label>
+      <input id="new-aliases" type="text" placeholder="Contoh: gajah asia, elephant">
+    </div>
+
+    <div class="form-group">
+      <label for="new-clue1">Petunjuk 1</label>
+      <textarea id="new-clue1" placeholder="Masukkan petunjuk pertama"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="new-clue2">Petunjuk 2</label>
+      <textarea id="new-clue2" placeholder="Masukkan petunjuk kedua"></textarea>
+    </div>
+
+    <div class="modal-actions">
+      <button type="button" class="btn-cancel" onclick="closeAddQuestion()">Batal</button>
+      <button type="button" onclick="saveNewQuestion()">💾 Simpan Soal</button>
+    </div>
+    <div id="add-success" class="add-success"></div>
+  </div>
+</div>
+
 </body>
 </html>
