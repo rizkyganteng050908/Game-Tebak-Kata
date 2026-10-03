@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Tebak Cepat Indonesia - Mode Admin</title>
+    <title>Game Tebak Cepat Indonesia</title>
     <style>
         :root {
             --primary: #4f46e5;
@@ -73,26 +73,6 @@
             transform: translateY(-2px);
         }
 
-        .admin-section {
-            margin-top: 25px;
-            padding-top: 15px;
-            border-top: 1px dashed #475569;
-            display: flex;
-            gap: 10px;
-        }
-
-        .btn-admin {
-            background-color: #059669;
-            flex: 1;
-        }
-        .btn-admin:hover { background-color: #047857; }
-
-        .btn-manage {
-            background-color: #0284c7;
-            flex: 1;
-        }
-        .btn-manage:hover { background-color: #0369a1; }
-
         .game-header {
             display: flex;
             justify-content: space-between;
@@ -127,8 +107,7 @@
             gap: 10px;
             margin-bottom: 15px;
         }
-
-        input[type="text"], input[type="password"], select {
+        input[type="text"] {
             width: 100%;
             padding: 12px;
             border-radius: 8px;
@@ -160,54 +139,6 @@
         .success { color: var(--success); }
         .error { color: var(--danger); }
 
-        /* Modal Custom */
-        .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            display: flex; justify-content: center; align-items: center;
-            padding: 20px;
-            z-index: 100;
-        }
-
-        .modal-content {
-            background-color: var(--card-bg);
-            padding: 25px;
-            border-radius: 12px;
-            width: 100%;
-            max-width: 480px;
-            text-align: left;
-            max-height: 85vh;
-            overflow-y: auto;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-size: 0.9rem;
-            color: #cbd5e1;
-        }
-
-        .question-list-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px;
-            background: #0f172a;
-            border-radius: 6px;
-            margin-bottom: 8px;
-        }
-
-        .btn-delete {
-            background-color: var(--danger);
-            padding: 5px 10px;
-            font-size: 0.8rem;
-        }
-
         .hidden { display: none !important; }
     </style>
 </head>
@@ -224,11 +155,6 @@
             <button onclick="startGame('presiden')">🇮🇩 Presiden & Wapres</button>
             <button onclick="startGame('menteri')">🏛 Menteri RI</button>
             <button onclick="startGame('pahlawan')">🎖️ Pahlawan</button>
-        </div>
-
-        <div class="admin-section">
-            <button class="btn-admin" onclick="requestAdminAccess('add')">🔒 Tambah Soal (Admin)</button>
-            <button class="btn-manage" onclick="requestAdminAccess('manage')">⚙️ Kelola Soal</button>
         </div>
     </div>
 
@@ -262,218 +188,7 @@
     </div>
 </div>
 
-<!-- Modal Password Admin -->
-<div id="login-modal" class="modal-overlay hidden">
-    <div class="modal-content" style="max-width: 380px;">
-        <h2 style="margin-bottom: 15px; color: var(--accent);">Login Admin</h2>
-        <div class="form-group">
-            <label>Username:</label>
-            <input type="text" id="admin-username-input" placeholder="Username...">
-        </div>
-        <div class="form-group">
-            <label>Password:</label>
-            <input type="password" id="admin-password-input" placeholder="Password...">
-        </div>
-        <p id="login-error" style="color: var(--danger); font-size: 0.85rem; margin-bottom: 10px;" class="hidden">Username atau password salah!</p>
-        <div style="display: flex; gap: 10px;">
-            <button onclick="verifyCredentials()" style="flex: 1; background-color: var(--success);">Masuk</button>
-            <button onclick="closeLoginModal()" style="flex: 1; background-color: var(--danger);">Batal</button>
-        </div>
-    </div>
-</div>
-
-<!-- Modal Tambah Soal (Admin Only) -->
-<div id="add-modal" class="modal-overlay hidden">
-    <div class="modal-content">
-        <h2 style="margin-bottom: 15px; color: var(--accent);">Tambah Soal Baru</h2>
-        <form id="add-question-form" onsubmit="saveCustomQuestion(event)">
-            <div class="form-group">
-                <label>Kategori:</label>
-                <select id="new-category" required>
-                    <option value="hewan">Hewan</option>
-                    <option value="presiden">Presiden & Wapres</option>
-                    <option value="menteri">Menteri RI</option>
-                    <option value="pahlawan">Pahlawan</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Jawaban Utama (Target):</label>
-                <input type="text" id="new-target" placeholder="Contoh: Kucing" required>
-            </div>
-            <div class="form-group">
-                <label>Alias/Variasi Jawaban (pisahkan dengan koma):</label>
-                <input type="text" id="new-aliases" placeholder="Contoh: kucing, mpus, cat" required>
-            </div>
-            <div class="form-group">
-                <label>Petunjuk Utama (Clue 1):</label>
-                <input type="text" id="new-clue1" placeholder="Contoh: Suaranya meong" required>
-            </div>
-            <div class="form-group">
-                <label>Petunjuk Tambahan (Clue 2 - Opsional):</label>
-                <input type="text" id="new-clue2" placeholder="Contoh: Suka makan ikan">
-            </div>
-            <div style="display: flex; gap: 10px; margin-top: 20px;">
-                <button type="submit" style="flex: 1; background-color: var(--success);">Simpan</button>
-                <button type="button" onclick="closeAddModal()" style="flex: 1; background-color: var(--danger);">Batal</button>
-            </div>
-        </form>
-    </div>
-</div>
-
-<!-- Modal Kelola Soal -->
-<div id="manage-modal" class="modal-overlay hidden">
-    <div class="modal-content">
-        <h2 style="margin-bottom: 15px; color: var(--accent);">Kelola Daftar Soal</h2>
-        <div class="form-group">
-            <label>Pilih Kategori:</label>
-            <select id="manage-category-select" onchange="renderQuestionList()">
-                <option value="hewan">Hewan</option>
-                <option value="presiden">Presiden & Wapres</option>
-                <option value="menteri">Menteri RI</option>
-                <option value="pahlawan">Pahlawan</option>
-            </select>
-        </div>
-        <div id="question-list-container"></div>
-        <button onclick="closeManageModal()" style="width: 100%; margin-top: 15px; background-color: #64748b;">Tutup</button>
-    </div>
-</div>
-
 <script>
-    // Kredensial Login Admin
-    const ADMIN_USERNAME = "admin";
-    const ADMIN_PASSWORD = "Gue admin";
-
-    const defaultDatabase = {
-        hewan: [
-            { target: "Komodo", aliases: ["komodo"], clues: ["Kadal terbesar di dunia", "Endemik dari Nusa Tenggara Timur"] },
-            { target: "Harimau Sumatra", aliases: ["harimau sumatra", "harimau sumatera", "harimau"], clues: ["Kucing besar endemik pulau Sumatra", "Memiliki garis-garis hitam tebal"] }
-        ],
-        presiden: [
-            { target: "Soekarno", aliases: ["soekarno", "sukarno", "bung karno"], clues: ["Presiden Indonesia pertama", "Bapak Proklamator Indonesia"] }
-        ],
-        menteri: [
-            { target: "Sri Mulyani", aliases: ["sri mulyani", "sri mulyani indrawati"], clues: ["Menteri Keuangan Republik Indonesia di beberapa era", "Mantan Direktur Pelaksana Bank Dunia"] }
-        ],
-        pahlawan: [
-            { target: "Diponegoro", aliases: ["diponegoro", "pangeran diponegoro"], clues: ["Pahlawan dari Jawa Tengah", "Memimpin Perang Jawa melawan Belanda (1825–1830)"] }
-        ]
-    };
-
-    let database = JSON.parse(localStorage.getItem('custom_game_database')) || defaultDatabase;
-    let isAdminAuthenticated = false;
-    let pendingAdminAction = null;
-
-    let currentCategory = "";
-    let currentQuestions = [];
-    let currentIndex = 0;
-    let score = 0;
-    let timer = 30;
-    let timerInterval = null;
-    let hintsLeft = 2;
-
-    function requestAdminAccess(action) {
-        if (isAdminAuthenticated) {
-            executeAdminAction(action);
-        } else {
-            pendingAdminAction = action;
-            document.getElementById('login-modal').classList.remove('hidden');
-            document.getElementById('admin-username-input').value = "";
-            document.getElementById('admin-password-input').value = "";
-            document.getElementById('login-error').classList.add('hidden');
-        }
-    }
-
-    function verifyCredentials() {
-        const inputUser = document.getElementById('admin-username-input').value;
-        const inputPass = document.getElementById('admin-password-input').value;
-
-        if (inputUser === ADMIN_USERNAME && inputPass === ADMIN_PASSWORD) {
-            isAdminAuthenticated = true;
-            closeLoginModal();
-            executeAdminAction(pendingAdminAction);
-        } else {
-            document.getElementById('login-error').classList.remove('hidden');
-        }
-    }
-
-    function closeLoginModal() {
-        document.getElementById('login-modal').classList.add('hidden');
-    }
-
-    function executeAdminAction(action) {
-        if (action === 'add') {
-            document.getElementById('add-modal').classList.remove('hidden');
-        } else if (action === 'manage') {
-            document.getElementById('manage-modal').classList.remove('hidden');
-            renderQuestionList();
-        }
-    }
-
-    function closeAddModal() {
-        document.getElementById('add-modal').classList.add('hidden');
-        document.getElementById('add-question-form').reset();
-    }
-
-    function closeManageModal() {
-        document.getElementById('manage-modal').classList.add('hidden');
-    }
-
-    function saveCustomQuestion(e) {
-        e.preventDefault();
-
-        const category = document.getElementById('new-category').value;
-        const target = document.getElementById('new-target').value.trim();
-        const aliasesRaw = document.getElementById('new-aliases').value;
-        const clue1 = document.getElementById('new-clue1').value.trim();
-        const clue2 = document.getElementById('new-clue2').value.trim();
-
-        const aliases = aliasesRaw.split(',').map(a => a.trim().toLowerCase()).filter(a => a.length > 0);
-        if (!aliases.includes(target.toLowerCase())) {
-            aliases.push(target.toLowerCase());
-        }
-
-        const clues = [clue1];
-        if (clue2) clues.push(clue2);
-
-        database[category].push({ target, aliases, clues });
-        localStorage.setItem('custom_game_database', JSON.stringify(database));
-
-        alert('Soal baru berhasil ditambahkan oleh Admin!');
-        closeAddModal();
-    }
-
-    function renderQuestionList() {
-        const cat = document.getElementById('manage-category-select').value;
-        const container = document.getElementById('question-list-container');
-        container.innerHTML = "";
-
-        const questions = database[cat] || [];
-        if (questions.length === 0) {
-            container.innerHTML = "<p style='color: #94a3b8;'>Belum ada soal pada kategori ini.</p>";
-            return;
-        }
-
-        questions.forEach((q, index) => {
-            const item = document.createElement('div');
-            item.className = 'question-list-item';
-            item.innerHTML = `
-                <div>
-                    <strong>${q.target}</strong>
-                    <div style="font-size: 0.8rem; color: #94a3b8;">${q.clues[0]}</div>
-                </div>
-                <button class="btn-delete" onclick="deleteQuestion('${cat}', ${index})">Hapus</button>
-            `;
-            container.appendChild(item);
-        });
-    }
-
-    function deleteQuestion(cat, index) {
-        if (confirm("Yakin ingin menghapus soal ini?")) {
-            database[cat].splice(index, 1);
-            localStorage.setItem('custom_game_database', JSON.stringify(database));
-            renderQuestionList();
-        }
-    }
 
     function startGame(category) {
         currentCategory = category;
