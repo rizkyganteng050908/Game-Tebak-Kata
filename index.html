@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Tebak Kata </title>
+    <title>Game Tebak Kata Indonesia</title>
     <style>
         :root {
             --primary: #4f46e5;
@@ -162,7 +162,7 @@
         <p style="margin-bottom: 20px;">Pilih kategori untuk memulai permainan:</p>
         <div class="category-select">
             <button onclick="startGame('hewan')">🐾 Hewan</button>
-            <button onclick="startGame('presiden')">🇮🇩 Presiden RI</button>
+            <button onclick="startGame('presiden')">🇮🇩 Presiden & Wapres</button>
             <button onclick="startGame('menteri')">🏛️ Menteri RI</button>
             <button onclick="startGame('pahlawan')">🎖️ Pahlawan</button>
         </div>
@@ -199,56 +199,64 @@
 </div>
 
 <script>
-    // Database Soal & Petunjuk Lebih Banyak
+    // Database Soal & Petunjuk
     const database = {
         hewan: [
-            { target: "Komodo", clues: ["Kadal terbesar di dunia", "Endemik dari Nusa Tenggara Timur"] },
-            { target: "Harimau Sumatra", clues: ["Kucing besar endemik pulau Sumatra", "Memiliki garis-garis hitam tebal"] },
-            { target: "Orangutan", clues: ["Kera besar berambut kemerahan", "Banyak ditemukan di Kalimantan dan Sumatra"] },
-            { target: "Cenderawasih", clues: ["Burung indah dijuluki Burung Surga", "Berasal dari wilayah Papua"] },
-            { target: "Anoa", clues: ["Mamalia mirip kerbau berukuran kecil", "Endemik pulau Sulawesi"] },
-            { target: "Bekantan", clues: ["Monyet berhidung panjang dan besar", "Endemik pulau Kalimantan"] },
-            { target: "Gajah Sumatra", clues: ["Mamalia darat terbesar di Indonesia", "Memiliki belalai dan gading"] },
-            { target: "Badak Jawa", clues: ["Hewan langka bercula satu", "Banyak dilindungi di Ujung Kulon"] },
-            { target: "Tarsius", clues: ["Mamalia kecil bermata sangat besar", "Hewan nokturnal asal Sulawesi"] },
-            { target: "Burung Jalak Bali", clues: ["Burung pengicau berwarna putih bersih", "Endemik pulau Bali"] },
-            { target: "Gajah", clues: ["Memiliki belalai yang panjang", "Memiliki gading putih di dekat mulutnya"] }
+            { target: "Komodo", aliases: ["komodo"], clues: ["Kadal terbesar di dunia", "Endemik dari Nusa Tenggara Timur"] },
+            { target: "Harimau Sumatra", aliases: ["harimau sumatra", "harimau sumatera", "harimau"], clues: ["Kucing besar endemik pulau Sumatra", "Memiliki garis-garis hitam tebal"] },
+            { target: "Orangutan", aliases: ["orangutan", "orang utan"], clues: ["Kera besar berambut kemerahan", "Banyak ditemukan di Kalimantan dan Sumatra"] },
+            { target: "Cenderawasih", aliases: ["cenderawasih", "cendrawasih"], clues: ["Burung indah dijuluki Burung Surga", "Berasal dari wilayah Papua"] },
+            { target: "Anoa", aliases: ["anoa"], clues: ["Mamalia mirip kerbau berukuran kecil", "Endemik pulau Sulawesi"] },
+            { target: "Bekantan", aliases: ["bekantan"], clues: ["Monyet berhidung panjang dan besar", "Endemik pulau Kalimantan"] },
+            { target: "Gajah Sumatra", aliases: ["gajah sumatra", "gajah sumatera"], clues: ["Subspesies gajah asia yang hidup di Sumatra", "Berukuran sedikit lebih kecil dari gajah asia umumnya"] },
+            { target: "Badak Jawa", aliases: ["badak jawa", "badak bercula satu"], clues: ["Hewan langka bercula satu", "Banyak dilindungi di Ujung Kulon"] },
+            { target: "Tarsius", aliases: ["tarsius"], clues: ["Mamalia kecil bermata sangat besar", "Hewan nokturnal asal Sulawesi"] },
+            { target: "Jalak Bali", aliases: ["jalak bali", "burung jalak bali"], clues: ["Burung pengicau berwarna putih bersih", "Endemik pulau Bali"] },
+            { target: "Gajah", aliases: ["gajah"], clues: ["Memiliki belalai yang panjang", "Memiliki gading putih di dekat mulutnya"] }
         ],
         presiden: [
-            { target: "Soekarno", clues: ["Presiden Indonesia pertama", "Bapak Proklamator Indonesia"] },
-            { target: "Soeharto", clues: ["Presiden ke-2 Indonesia", "Memimpin pada masa Orde Baru"] },
-            { target: "BJ Habibie", clues: ["Presiden ke-3 Indonesia", "Ahli teknologi penerbangan nasional"] },
-            { target: "Gus Dur", clues: ["Presiden ke-4 Indonesia", "Nama aslinya Abdurrahman Wahid"] },
-            { target: "Megawati", clues: ["Presiden ke-5 Indonesia", "Presiden wanita pertama di Indonesia"] },
-            { target: "Susilo Bambang Yudhoyono", clues: ["Presiden ke-6 Indonesia", "Sering disapa dengan singkatan SBY"] },
-            { target: "Joko Widodo", clues: ["Presiden ke-7 Indonesia", "Akrab dipanggil Jokowi"] },
-            { target: "Prabowo Subianto", clues: ["Presiden ke-8 Indonesia", "Mantan Danjen Kopassus dan Menhan"] },
-            { target: "Mohammad Hatta", clues: ["Wakil Presiden Indonesia pertama", "Bapak Koperasi Indonesia"] },
-            { target: "Adam Malik", clues: ["Wakil Presiden ke-3 Indonesia", "Pernah menjabat Menteri Luar Negeri"] }
+            { target: "Soekarno", aliases: ["soekarno", "sukarno", "bung karno"], clues: ["Presiden Indonesia pertama", "Bapak Proklamator Indonesia"] },
+            { target: "Soeharto", aliases: ["soeharto", "suharto", "pak harto"], clues: ["Presiden ke-2 Indonesia", "Memimpin pada masa Orde Baru"] },
+            { target: "BJ Habibie", aliases: ["bj habibie", "habibie", "b.j. habibie"], clues: ["Presiden ke-3 Indonesia", "Ahli teknologi penerbangan nasional"] },
+            { target: "Gus Dur", aliases: ["gus dur", "abdurrahman wahid", "gusdur"], clues: ["Presiden ke-4 Indonesia", "Bapak Pluralisme Indonesia"] },
+            { target: "Megawati Soekarnoputri", aliases: ["megawati", "megawati soekarnoputri", "mega"], clues: ["Presiden ke-5 Indonesia", "Presiden wanita pertama di Indonesia"] },
+            { target: "Susilo Bambang Yudhoyono", aliases: ["susilo bambang yudhoyono", "sby"], clues: ["Presiden ke-6 Indonesia", "Presiden pertama yang dipilih langsung lewat pemilu"] },
+            { target: "Joko Widodo", aliases: ["joko widodo", "jokowi"], clues: ["Presiden ke-7 Indonesia", "Mantan Gubernur DKI Jakarta dan Wali Kota Surakarta"] },
+            { target: "Prabowo Subianto", aliases: ["prabowo", "prabowo subianto"], clues: ["Presiden ke-8 Indonesia", "Mantan Danjen Kopassus dan Menhan RI"] },
+            { target: "Mohammad Hatta", aliases: ["mohammad hatta", "bung hatta", "moch hatta"], clues: ["Wakil Presiden Indonesia pertama", "Bapak Koperasi Indonesia"] },
+            { target: "Adam Malik", aliases: ["adam malik"], clues: ["Wakil Presiden ke-3 Indonesia", "Pernah menjabat Menteri Luar Negeri dan Ketua DPR"] },
+            { target: "Hamengkubuwono IX", aliases: ["hamengkubuwono ix", "sultan hamengkubuwono ix"], clues: ["Wakil Presiden ke-2 Indonesia", "Sultan Yogyakarta dan Bapak Pramuka Indonesia"] },
+            { target: "Jusuf Kalla", aliases: ["jusuf kalla", "jk"], clues: ["Wakil Presiden RI yang menjabat 2 kali di periode berbeda", "Mendampingi SBY dan Jokowi"] },
+            { target: "Ma'ruf Amin", aliases: ["ma'ruf amin", "maruf amin"], clues: ["Wakil Presiden ke-13 Indonesia", "Mantan Ketua Umum Majelis Ulama Indonesia (MUI)"] },
+            { target: "Gibran Rakabuming Raka", aliases: ["gibran", "gibran rakabuming", "gibran rakabuming raka"], clues: ["Wakil Presiden ke-14 Indonesia", "Wakil Presiden termuda dalam sejarah Indonesia"] }
         ],
         menteri: [
-            { target: "Sri Mulyani", clues: ["Menteri Keuangan Republik Indonesia", "Mantan Direktur Pelaksana Bank Dunia"] },
-            { target: "Prabowo Subianto", clues: ["Mantan Menteri Pertahanan RI", "Pendiri Partai Gerindra"] },
-            { target: "Erick Thohir", clues: ["Menteri Badan Usaha Milik Negara (BUMN)", "Ketua Umum PSSI"] },
-            { target: "Bahlil Lahadalia", clues: ["Menteri Energi dan Sumber Daya Mineral (ESDM)", "Mantan Kepala BKPM"] },
-            { target: "Airlangga Hartarto", clues: ["Menteri Koordinator Bidang Perekonomian", "Tokoh politik senior Indonesia"] },
-            { target: "Nadiem Makarim", clues: ["Mantan Mendikbudristek", "Pendiri platform Gojek"] },
-            { target: "Retno Marsudi", clues: ["Mantan Menteri Luar Negeri wanita pertama RI", "Diplomat karir senior"] },
-            { target: "Luhut Binsar Pandjaitan", clues: ["Mantan Menko Marves", "Tokoh senior pemerintahan Indonesia"] },
-            { target: "Sandiaga Uno", clues: ["Mantan Menparekraf", "Seorang pengusaha nasional"] },
-            { target: "AHY", clues: ["Menteri ATR/BPN", "Putra sulung Susilo Bambang Yudhoyono"] }
+            { target: "Sri Mulyani", aliases: ["sri mulyani", "sri mulyani indrawati"], clues: ["Menteri Keuangan Republik Indonesia di beberapa era", "Mantan Direktur Pelaksana Bank Dunia"] },
+            { target: "Erick Thohir", aliases: ["erick thohir", "erik thohir"], clues: ["Menteri BUMN Indonesia", "Ketua Umum PSSI periode 2023–2027"] },
+            { target: "Bahlil Lahadalia", aliases: ["bahlil", "bahlil lahadalia"], clues: ["Menteri ESDM RI", "Mantan Kepala BKPM dan Tokoh HIPMI"] },
+            { target: "Airlangga Hartarto", aliases: ["airlangga", "airlangga hartarto"], clues: ["Menteri Koordinator Bidang Perekonomian RI", "Mantan Ketua Umum Partai Golkar"] },
+            { target: "Nadiem Makarim", aliases: ["nadiem", "nadiem makarim"], clues: ["Mantan Mendikbudristek RI", "Pendiri platform Gojek"] },
+            { target: "Retno Marsudi", aliases: ["retno marsudi", "retno"], clues: ["Mantan Menteri Luar Negeri wanita pertama RI", "Diplomat senior Indonesia"] },
+            { target: "Luhut Binsar Pandjaitan", aliases: ["luhut", "luhut binsar pandjaitan", "luhut pandjaitan"], clues: ["Mantan Menko Marves", "Tokoh senior purnawirawan TNI dan pemerintahan"] },
+            { target: "Sandiaga Uno", aliases: ["sandiaga uno", "sandi uno"], clues: ["Mantan Menparekraf", "Pengusaha muda dan mantan Wagub DKI Jakarta"] },
+            { target: "AHY", aliases: ["ahy", "agus harimurti yudhoyono", "agus yudhoyono"], clues: ["Menteri ATR/BPN / Menko Infrastruktur", "Putra sulung Presiden Susilo Bambang Yudhoyono"] },
+            { target: "Basuki Hadimuljono", aliases: ["basuki hadimuljono", "pak bas", "basuki"], clues: ["Mantan Menteri PUPR yang identik dengan gaya nyentrik", "Sering memegang kamera fotografer di ajang internasional"] },
+            { target: "Susi Pudjiastuti", aliases: ["susi pudjiastuti", "bu susi"], clues: ["Mantan Menteri Kelautan dan Perikanan", "Terkenal dengan jargon 'Tenggelamkan!'"] },
+            { target: "Mahfud MD", aliases: ["mahfud md", "mahfud"], clues: ["Mantan Menko Polhukam RI", "Pernah menjabat Ketua Mahkamah Konstitusi"] },
+            { target: "Zulkifli Hasan", aliases: ["zulkifli hasan", "zulhas"], clues: ["Menteri Perdagangan / Menko Pangan RI", "Ketua Umum Partai Amanat Nasional (PAN)"] },
+            { target: "Tito Karnavian", aliases: ["tito karnavian", "tito"], clues: ["Menteri Dalam Negeri RI", "Mantan Kapolri"] }
         ],
         pahlawan: [
-            { target: "Diponegoro", clues: ["Pahlawan dari Jawa Tengah", "Memimpin Perang Jawa melawan Belanda"] },
-            { target: "Cut Nyak Dhien", clues: ["Pahlawan wanita dari Aceh", "Berjuang gigih melawan penjajah Belanda"] },
-            { target: "Ki Hajar Dewantara", clues: ["Bapak Pendidikan Nasional Indonesia", "Pendiri Perguruan Taman Siswa"] },
-            { target: "Gajah Mada", clues: ["Panglima perang Kerajaan Majapahit", "Terkenal dengan Sumpah Palapa"] },
-            { target: "Kartini", clues: ["Pahlawan emansipasi wanita Indonesia", "Penulis buku 'Habis Gelap Terbitlah Terang'"] },
-            { target: "Pattimura", clues: ["Pahlawan nasional dari Maluku", "Gambar wajahnya pernah ada di uang Rp 1.000"] },
-            { target: "Sisingamangaraja", clues: ["Raja sekaligus pahlawan dari Sumatra Utara", "Raja Batak ke-XII"] },
-            { target: "Bung Tomo", clues: ["Tokoh pengobar semangat dalam Pertempuran 10 November", "Pahlawan dari Surabaya"] },
-            { target: "Jenderal Soedirman", clues: ["Panglima besar TNI pertama", "Terkenal dengan taktik perang gerilya"] },
-            { target: "I Gusti Ngurah Rai", clues: ["Pahlawan nasional dari Bali", "Memimpin perang Puputan Margarana"] }
+            { target: "Diponegoro", aliases: ["diponegoro", "pangeran diponegoro"], clues: ["Pahlawan dari Jawa Tengah", "Memimpin Perang Jawa melawan Belanda (1825–1830)"] },
+            { target: "Cut Nyak Dhien", aliases: ["cut nyak dhien", "cut nyak dien"], clues: ["Pahlawan wanita dari Aceh", "Berjuang gigih melawan penjajah Belanda"] },
+            { target: "Ki Hajar Dewantara", aliases: ["ki hajar dewantara"], clues: ["Bapak Pendidikan Nasional Indonesia", "Pendiri Perguruan Taman Siswa"] },
+            { target: "Gajah Mada", aliases: ["gajah mada"], clues: ["Panglima perang Kerajaan Majapahit", "Terkenal dengan Sumpah Palapa"] },
+            { target: "Kartini", aliases: ["kartini", "raden ajeng kartini", "r.a. kartini"], clues: ["Pahlawan emansipasi wanita Indonesia", "Penulis surat-surat 'Habis Gelap Terbitlah Terang'"] },
+            { target: "Pattimura", aliases: ["pattimura", "kapitan pattimura"], clues: ["Pahlawan nasional dari Maluku", "Gambar wajahnya pernah diabadikan di uang kertas Rp 1.000"] },
+            { target: "Sisingamangaraja", aliases: ["sisingamangaraja", "sisingamangaraja xii"], clues: ["Raja sekaligus pahlawan dari Sumatra Utara", "Raja Batak ke-XII"] },
+            { target: "Bung Tomo", aliases: ["bung tomo", "sutomo"], clues: ["Tokoh pengobar semangat dalam Pertempuran 10 November", "Pahlawan orator dari Surabaya"] },
+            { target: "Jenderal Soedirman", aliases: ["jenderal soedirman", "soedirman", "sudirman"], clues: ["Panglima besar TNI pertama", "Terkenal dengan taktik perang gerilya saat sakit"] },
+            { target: "I Gusti Ngurah Rai", aliases: ["i gusti ngurah rai", "ngurah rai"], clues: ["Pahlawan nasional dari Bali", "Memimpin perang Puputan Margarana"] }
         ]
     };
 
@@ -261,7 +269,7 @@
     let timerInterval = null;
     let hintsLeft = 2;
 
-    // Suara Sederhana dengan Web Audio API
+    // Web Audio API
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     function playSound(type) {
         if (audioCtx.state === 'suspended') audioCtx.resume();
@@ -290,7 +298,6 @@
 
     function startGame(category) {
         currentCategory = category;
-        // Acak urutan soal setiap kali game dimulai
         currentQuestions = [...database[category]].sort(() => Math.random() - 0.5);
         currentIndex = 0;
         score = 0;
@@ -337,12 +344,14 @@
 
     function checkAnswer() {
         const input = document.getElementById('answer-input').value.trim().toLowerCase();
-        const target = currentQuestions[currentIndex].target.toLowerCase();
+        const q = currentQuestions[currentIndex];
 
         if (!input) return;
 
-        // Pencocokan jawaban
-        if (input === target || (target.includes(input) && input.length >= 3)) {
+        // Pencocokan presisi menggunakan array aliases
+        const isCorrect = q.aliases.some(alias => alias === input);
+
+        if (isCorrect) {
             clearInterval(timerInterval);
             playSound('correct');
             score += timer * 10;
