@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Tebak Kata Indonesia</title>
+    <title>Game Tebak Cepat Indonesia - Mode Admin</title>
     <style>
         :root {
             --primary: #4f46e5;
@@ -73,15 +73,25 @@
             transform: translateY(-2px);
         }
 
-        .btn-add {
-            background-color: #059669;
-            width: 100%;
-            margin-top: 10px;
+        .admin-section {
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 1px dashed #475569;
+            display: flex;
+            gap: 10px;
         }
 
-        .btn-add:hover {
-            background-color: #047857;
+        .btn-admin {
+            background-color: #059669;
+            flex: 1;
         }
+        .btn-admin:hover { background-color: #047857; }
+
+        .btn-manage {
+            background-color: #0284c7;
+            flex: 1;
+        }
+        .btn-manage:hover { background-color: #0369a1; }
 
         .game-header {
             display: flex;
@@ -118,7 +128,7 @@
             margin-bottom: 15px;
         }
 
-        input[type="text"], select {
+        input[type="text"], input[type="password"], select {
             width: 100%;
             padding: 12px;
             border-radius: 8px;
@@ -129,9 +139,7 @@
             outline: none;
         }
 
-        input[type="text"]:focus, select:focus {
-            border-color: var(--primary);
-        }
+        input:focus, select:focus { border-color: var(--primary); }
 
         .action-btns {
             display: flex;
@@ -167,8 +175,10 @@
             padding: 25px;
             border-radius: 12px;
             width: 100%;
-            max-width: 450px;
+            max-width: 480px;
             text-align: left;
+            max-height: 85vh;
+            overflow-y: auto;
         }
 
         .form-group {
@@ -180,6 +190,22 @@
             margin-bottom: 5px;
             font-size: 0.9rem;
             color: #cbd5e1;
+        }
+
+        .question-list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background: #0f172a;
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
+
+        .btn-delete {
+            background-color: var(--danger);
+            padding: 5px 10px;
+            font-size: 0.8rem;
         }
 
         .hidden { display: none !important; }
@@ -196,10 +222,14 @@
         <div class="category-select">
             <button onclick="startGame('hewan')">🐾 Hewan</button>
             <button onclick="startGame('presiden')">🇮🇩 Presiden & Wapres</button>
-            <button onclick="startGame('menteri')">🏛️ Menteri RI</button>
+            <button onclick="startGame('menteri')">🏛 Menteri RI</button>
             <button onclick="startGame('pahlawan')">🎖️ Pahlawan</button>
         </div>
-        <button class="btn-add" onclick="openAddModal()">➕ Tambah Soal Sendiri</button>
+
+        <div class="admin-section">
+            <button class="btn-admin" onclick="requestAdminAccess('add')">🔒 Tambah Soal (Admin)</button>
+            <button class="btn-manage" onclick="requestAdminAccess('manage')">⚙️ Kelola Soal</button>
+        </div>
     </div>
 
     <!-- Area Permainan -->
@@ -232,7 +262,27 @@
     </div>
 </div>
 
-<!-- Modal Tambah Soal -->
+<!-- Modal Password Admin -->
+<div id="login-modal" class="modal-overlay hidden">
+    <div class="modal-content" style="max-width: 380px;">
+        <h2 style="margin-bottom: 15px; color: var(--accent);">Login Admin</h2>
+        <div class="form-group">
+            <label>Username:</label>
+            <input type="text" id="admin-username-input" placeholder="Username...">
+        </div>
+        <div class="form-group">
+            <label>Password:</label>
+            <input type="password" id="admin-password-input" placeholder="Password...">
+        </div>
+        <p id="login-error" style="color: var(--danger); font-size: 0.85rem; margin-bottom: 10px;" class="hidden">Username atau password salah!</p>
+        <div style="display: flex; gap: 10px;">
+            <button onclick="verifyCredentials()" style="flex: 1; background-color: var(--success);">Masuk</button>
+            <button onclick="closeLoginModal()" style="flex: 1; background-color: var(--danger);">Batal</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Tambah Soal (Admin Only) -->
 <div id="add-modal" class="modal-overlay hidden">
     <div class="modal-content">
         <h2 style="margin-bottom: 15px; color: var(--accent);">Tambah Soal Baru</h2>
@@ -270,28 +320,48 @@
     </div>
 </div>
 
+<!-- Modal Kelola Soal -->
+<div id="manage-modal" class="modal-overlay hidden">
+    <div class="modal-content">
+        <h2 style="margin-bottom: 15px; color: var(--accent);">Kelola Daftar Soal</h2>
+        <div class="form-group">
+            <label>Pilih Kategori:</label>
+            <select id="manage-category-select" onchange="renderQuestionList()">
+                <option value="hewan">Hewan</option>
+                <option value="presiden">Presiden & Wapres</option>
+                <option value="menteri">Menteri RI</option>
+                <option value="pahlawan">Pahlawan</option>
+            </select>
+        </div>
+        <div id="question-list-container"></div>
+        <button onclick="closeManageModal()" style="width: 100%; margin-top: 15px; background-color: #64748b;">Tutup</button>
+    </div>
+</div>
+
 <script>
+    // Kredensial Login Admin
+    const ADMIN_USERNAME = "admin";
+    const ADMIN_PASSWORD = "Gue admin";
+
     const defaultDatabase = {
         hewan: [
             { target: "Komodo", aliases: ["komodo"], clues: ["Kadal terbesar di dunia", "Endemik dari Nusa Tenggara Timur"] },
-            { target: "Harimau Sumatra", aliases: ["harimau sumatra", "harimau sumatera", "harimau"], clues: ["Kucing besar endemik pulau Sumatra", "Memiliki garis-garis hitam tebal"] },
-            { target: "Gajah", aliases: ["gajah"], clues: ["Memiliki belalai yang panjang", "Memiliki gading putih di dekat mulutnya"] }
+            { target: "Harimau Sumatra", aliases: ["harimau sumatra", "harimau sumatera", "harimau"], clues: ["Kucing besar endemik pulau Sumatra", "Memiliki garis-garis hitam tebal"] }
         ],
         presiden: [
-            { target: "Soekarno", aliases: ["soekarno", "sukarno", "bung karno"], clues: ["Presiden Indonesia pertama", "Bapak Proklamator Indonesia"] },
-            { target: "Joko Widodo", aliases: ["joko widodo", "jokowi"], clues: ["Presiden ke-7 Indonesia", "Mantan Gubernur DKI Jakarta dan Wali Kota Surakarta"] }
+            { target: "Soekarno", aliases: ["soekarno", "sukarno", "bung karno"], clues: ["Presiden Indonesia pertama", "Bapak Proklamator Indonesia"] }
         ],
         menteri: [
-            { target: "Sri Mulyani", aliases: ["sri mulyani", "sri mulyani indrawati"], clues: ["Menteri Keuangan Republik Indonesia di beberapa era", "Mantan Direktur Pelaksana Bank Dunia"] },
-            { target: "Erick Thohir", aliases: ["erick thohir", "erik thohir"], clues: ["Menteri BUMN Indonesia", "Ketua Umum PSSI periode 2023–2027"] }
+            { target: "Sri Mulyani", aliases: ["sri mulyani", "sri mulyani indrawati"], clues: ["Menteri Keuangan Republik Indonesia di beberapa era", "Mantan Direktur Pelaksana Bank Dunia"] }
         ],
         pahlawan: [
             { target: "Diponegoro", aliases: ["diponegoro", "pangeran diponegoro"], clues: ["Pahlawan dari Jawa Tengah", "Memimpin Perang Jawa melawan Belanda (1825–1830)"] }
         ]
     };
 
-    // Muat database dari LocalStorage jika ada
     let database = JSON.parse(localStorage.getItem('custom_game_database')) || defaultDatabase;
+    let isAdminAuthenticated = false;
+    let pendingAdminAction = null;
 
     let currentCategory = "";
     let currentQuestions = [];
@@ -300,66 +370,132 @@
     let timer = 30;
     let timerInterval = null;
     let hintsLeft = 2;
-    let audioCtx = null;
 
-    function initAudio() {
-        if (!audioCtx) {
-            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        }
-        if (audioCtx && audioCtx.state === 'suspended') {
-            audioCtx.resume();
+    function requestAdminAccess(action) {
+        if (isAdminAuthenticated) {
+            executeAdminAction(action);
+        } else {
+            pendingAdminAction = action;
+            document.getElementById('login-modal').classList.remove('hidden');
+            document.getElementById('admin-username-input').value = "";
+            document.getElementById('admin-password-input').value = "";
+            document.getElementById('login-error').classList.add('hidden');
         }
     }
 
-    function playSound(type) {
-        try {
-            initAudio();
-            if (!audioCtx) return;
+    function verifyCredentials() {
+        const inputUser = document.getElementById('admin-username-input').value;
+        const inputPass = document.getElementById('admin-password-input').value;
 
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
+        if (inputUser === ADMIN_USERNAME && inputPass === ADMIN_PASSWORD) {
+            isAdminAuthenticated = true;
+            closeLoginModal();
+            executeAdminAction(pendingAdminAction);
+        } else {
+            document.getElementById('login-error').classList.remove('hidden');
+        }
+    }
 
-            if (type === 'correct') {
-                osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(659.25, audioCtx.currentTime + 0.15);
-                gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
-                gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
-                osc.start();
-                osc.stop(audioCtx.currentTime + 0.3);
-            } else if (type === 'wrong') {
-                osc.type = 'sawtooth';
-                osc.frequency.setValueAtTime(200, audioCtx.currentTime);
-                osc.frequency.linearRampToValueAtTime(100, audioCtx.currentTime + 0.2);
-                gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
-                gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
-                osc.start();
-                osc.stop(audioCtx.currentTime + 0.2);
-            }
-        } catch (e) {
-            console.log("Audio play blocked", e);
+    function closeLoginModal() {
+        document.getElementById('login-modal').classList.add('hidden');
+    }
+
+    function executeAdminAction(action) {
+        if (action === 'add') {
+            document.getElementById('add-modal').classList.remove('hidden');
+        } else if (action === 'manage') {
+            document.getElementById('manage-modal').classList.remove('hidden');
+            renderQuestionList();
+        }
+    }
+
+    function closeAddModal() {
+        document.getElementById('add-modal').classList.add('hidden');
+        document.getElementById('add-question-form').reset();
+    }
+
+    function closeManageModal() {
+        document.getElementById('manage-modal').classList.add('hidden');
+    }
+
+    function saveCustomQuestion(e) {
+        e.preventDefault();
+
+        const category = document.getElementById('new-category').value;
+        const target = document.getElementById('new-target').value.trim();
+        const aliasesRaw = document.getElementById('new-aliases').value;
+        const clue1 = document.getElementById('new-clue1').value.trim();
+        const clue2 = document.getElementById('new-clue2').value.trim();
+
+        const aliases = aliasesRaw.split(',').map(a => a.trim().toLowerCase()).filter(a => a.length > 0);
+        if (!aliases.includes(target.toLowerCase())) {
+            aliases.push(target.toLowerCase());
+        }
+
+        const clues = [clue1];
+        if (clue2) clues.push(clue2);
+
+        database[category].push({ target, aliases, clues });
+        localStorage.setItem('custom_game_database', JSON.stringify(database));
+
+        alert('Soal baru berhasil ditambahkan oleh Admin!');
+        closeAddModal();
+    }
+
+    function renderQuestionList() {
+        const cat = document.getElementById('manage-category-select').value;
+        const container = document.getElementById('question-list-container');
+        container.innerHTML = "";
+
+        const questions = database[cat] || [];
+        if (questions.length === 0) {
+            container.innerHTML = "<p style='color: #94a3b8;'>Belum ada soal pada kategori ini.</p>";
+            return;
+        }
+
+        questions.forEach((q, index) => {
+            const item = document.createElement('div');
+            item.className = 'question-list-item';
+            item.innerHTML = `
+                <div>
+                    <strong>${q.target}</strong>
+                    <div style="font-size: 0.8rem; color: #94a3b8;">${q.clues[0]}</div>
+                </div>
+                <button class="btn-delete" onclick="deleteQuestion('${cat}', ${index})">Hapus</button>
+            `;
+            container.appendChild(item);
+        });
+    }
+
+    function deleteQuestion(cat, index) {
+        if (confirm("Yakin ingin menghapus soal ini?")) {
+            database[cat].splice(index, 1);
+            localStorage.setItem('custom_game_database', JSON.stringify(database));
+            renderQuestionList();
         }
     }
 
     function startGame(category) {
-        initAudio();
         currentCategory = category;
         currentQuestions = [...database[category]].sort(() => Math.random() - 0.5);
         currentIndex = 0;
         score = 0;
-        
+
+        if (currentQuestions.length === 0) {
+            alert("Kategori ini belum memiliki soal.");
+            return;
+        }
+
         document.getElementById('category-title').innerText = category.toUpperCase();
         document.getElementById('menu-screen').classList.add('hidden');
         document.getElementById('game-screen').classList.remove('hidden');
         document.getElementById('score').innerText = score;
-        
         loadQuestion();
     }
 
     function loadQuestion() {
         if (currentIndex >= currentQuestions.length) {
-            alert(`Selamat! Anda telah menyelesaikan semua soal di kategori ini.\nSkor Akhir Anda: ${score}`);
+            alert(`Selesai! Skor Akhir: ${score}`);
             backToMenu();
             return;
         }
@@ -367,26 +503,21 @@
         clearInterval(timerInterval);
         timer = 30;
         hintsLeft = 2;
-        
+
         document.getElementById('question-number').innerText = `${currentIndex + 1}/${currentQuestions.length}`;
         document.getElementById('timer').innerText = timer;
         document.getElementById('hint-count').innerText = hintsLeft;
         document.getElementById('answer-input').value = "";
         document.getElementById('feedback').innerText = "";
-        
+
         const q = currentQuestions[currentIndex];
         document.getElementById('clue-text').innerText = q.clues[0];
-
-        setTimeout(() => {
-            document.getElementById('answer-input').focus();
-        }, 100);
 
         timerInterval = setInterval(() => {
             timer--;
             document.getElementById('timer').innerText = timer;
             if (timer <= 0) {
                 clearInterval(timerInterval);
-                playSound('wrong');
                 showFeedback("Waktu Habis! Jawaban: " + q.target, false);
                 setTimeout(nextQuestion, 2000);
             }
@@ -394,24 +525,18 @@
     }
 
     function checkAnswer() {
-        initAudio();
         const input = document.getElementById('answer-input').value.trim().toLowerCase();
         const q = currentQuestions[currentIndex];
-
         if (!input) return;
 
-        const isCorrect = q.aliases.some(alias => alias === input);
-
-        if (isCorrect) {
+        if (q.aliases.some(alias => alias === input)) {
             clearInterval(timerInterval);
-            playSound('correct');
             score += timer * 10;
             document.getElementById('score').innerText = score;
             showFeedback("Jawaban Benar! 🎉", true);
             setTimeout(nextQuestion, 1500);
         } else {
-            playSound('wrong');
-            showFeedback("Jawaban Salah, coba lagi!", false);
+            showFeedback("Jawaban Salah!", false);
         }
     }
 
@@ -424,7 +549,7 @@
         if (hintsLeft === 1 && q.clues[1]) {
             document.getElementById('clue-text').innerText += " | " + q.clues[1];
         } else {
-            const mask = q.target.replace(/[a-zA-Z]/g, (char, index) => index % 2 === 0 ? char : '_');
+            const mask = q.target.replace(/[a-zA-Z]/g, (char, i) => i % 2 === 0 ? char : '_');
             document.getElementById('clue-text').innerText += ` | Bocoran: ${mask}`;
         }
     }
@@ -446,49 +571,8 @@
         document.getElementById('menu-screen').classList.remove('hidden');
     }
 
-    // Modal Handlers
-    function openAddModal() {
-        document.getElementById('add-modal').classList.remove('hidden');
-    }
-
-    function closeAddModal() {
-        document.getElementById('add-modal').classList.add('hidden');
-        document.getElementById('add-question-form').reset();
-    }
-
-    function saveCustomQuestion(e) {
-        e.preventDefault();
-
-        const category = document.getElementById('new-category').value;
-        const target = document.getElementById('new-target').value.trim();
-        const aliasesRaw = document.getElementById('new-aliases').value;
-        const clue1 = document.getElementById('new-clue1').value.trim();
-        const clue2 = document.getElementById('new-clue2').value.trim();
-
-        const aliases = aliasesRaw.split(',').map(a => a.trim().toLowerCase()).filter(a => a.length > 0);
-        if (!aliases.includes(target.toLowerCase())) {
-            aliases.push(target.toLowerCase());
-        }
-
-        const clues = [clue1];
-        if (clue2) clues.push(clue2);
-
-        const newQuestion = { target, aliases, clues };
-
-        // Masukkan soal baru ke kategori yang dipilih
-        database[category].push(newQuestion);
-
-        // Simpan ke localStorage
-        localStorage.setItem('custom_game_database', JSON.stringify(database));
-
-        alert('Soal baru berhasil ditambahkan!');
-        closeAddModal();
-    }
-
-    document.getElementById('answer-input').addEventListener('keypress', function (e) {
-        if (e.key === 'Enter') {
-            checkAnswer();
-        }
+    document.getElementById('answer-input').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') checkAnswer();
     });
 </script>
 
