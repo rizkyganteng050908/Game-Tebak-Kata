@@ -134,43 +134,2624 @@ input[type=text]:focus{border-color:var(--primary)}
 <script>
 /* DATABASE SOAL - TANPA ADMIN */
 const database = {
-  hewan: [
-    {target:"Komodo",aliases:["komodo"],clues:["Kadal terbesar di dunia","Endemik dari Nusa Tenggara Timur"]},
-    {target:"Harimau Sumatra",aliases:["harimau sumatra","harimau sumatera","harimau"],clues:["Kucing besar endemik Pulau Sumatra","Memiliki garis-garis hitam tebal"]},
-    {target:"Orangutan",aliases:["orangutan","orang utan"],clues:["Primata yang hidup di hutan Indonesia","Banyak ditemukan di Kalimantan dan Sumatra"]},
-    {target:"Cenderawasih",aliases:["cenderawasih","burung cenderawasih"],clues:["Burung indah dari Papua","Dikenal sebagai burung surga"]},
-    {target:"Kura-kura",aliases:["kura-kura","kura kura"],clues:["Hewan yang membawa cangkang di tubuhnya","Berjalan dengan lambat"]},
-    {target:"Jerapah",aliases:["jerapah"],clues:["Hewan dengan leher yang sangat panjang","Banyak ditemukan di Afrika"]},
-    {target:"Gajah",aliases:["gajah"],clues:["Hewan besar dengan belalai","Memiliki telinga yang lebar"]},
-    {target:"Kucing",aliases:["kucing"],clues:["Hewan yang sering dipelihara di rumah","Suka mengeong"]},
-    {target:"Domba",aliases:["domba"],clues:["Hewan berbulu tebal","Menghasilkan wol"]},
-    {target:"Sapi",aliases:["sapi"],clues:["Hewan ternak pemakan rumput","Menghasilkan susu"]},
-    {target:"Kuda",aliases:["kuda"],clues:["Hewan yang sering digunakan untuk ditunggangi","Memiliki surai"]},
-    {target:"Harimau",aliases:["harimau"],clues:["Kucing besar pemakan daging","Memiliki belang hitam"]},
-    {target:"Singa",aliases:["singa"],clues:["Dikenal sebagai raja hutan","Singa jantan memiliki surai"]},
-    {target:"Macan",aliases:["macan"],clues:["Hewan pemakan daging dari keluarga kucing","Memiliki tubuh yang kuat dan lincah"]},
-    {target:"Burung",aliases:["burung"],clues:["Hewan yang memiliki sayap dan paruh","Banyak jenisnya dapat terbang"]},
-    {target:"Burung Beo",aliases:["burung beo","beo"],clues:["Burung yang terkenal dapat menirukan suara","Memiliki paruh yang kuat"]},
-    {target:"Burung Kakatua",aliases:["burung kakatua","kakatua"],clues:["Burung yang memiliki jambul di kepalanya","Terkenal dengan suaranya yang keras"]},
-    {target:"Burung Merak",aliases:["burung merak","merak"],clues:["Burung yang memiliki ekor sangat indah","Sering membuka ekornya seperti kipas"]},
-    {target:"Buaya",aliases:["buaya"],clues:["Reptil besar yang hidup di air dan darat","Memiliki rahang dan gigi yang kuat"]},
-    {target:"Serigala",aliases:["serigala"],clues:["Hewan pemakan daging yang hidup berkelompok","Mirip anjing tetapi hidup liar"]}
+  "hewan": [
+    {
+      "target": "Komodo",
+      "aliases": [
+        "komodo"
+      ],
+      "clues": [
+        "Kadal terbesar di dunia",
+        "Endemik dari Nusa Tenggara Timur"
+      ]
+    },
+    {
+      "target": "Harimau Sumatra",
+      "aliases": [
+        "harimau sumatra",
+        "harimau sumatera",
+        "harimau"
+      ],
+      "clues": [
+        "Kucing besar endemik Pulau Sumatra",
+        "Memiliki garis-garis hitam tebal"
+      ]
+    },
+    {
+      "target": "Orangutan",
+      "aliases": [
+        "orangutan",
+        "orang utan"
+      ],
+      "clues": [
+        "Primata yang hidup di hutan Indonesia",
+        "Banyak ditemukan di Kalimantan dan Sumatra"
+      ]
+    },
+    {
+      "target": "Cenderawasih",
+      "aliases": [
+        "cenderawasih",
+        "burung cenderawasih"
+      ],
+      "clues": [
+        "Burung indah dari Papua",
+        "Dikenal sebagai burung surga"
+      ]
+    },
+    {
+      "target": "Kura-kura",
+      "aliases": [
+        "kura-kura",
+        "kura kura"
+      ],
+      "clues": [
+        "Hewan yang membawa cangkang di tubuhnya",
+        "Berjalan dengan lambat"
+      ]
+    },
+    {
+      "target": "Jerapah",
+      "aliases": [
+        "jerapah"
+      ],
+      "clues": [
+        "Hewan dengan leher yang sangat panjang",
+        "Banyak ditemukan di Afrika"
+      ]
+    },
+    {
+      "target": "Gajah",
+      "aliases": [
+        "gajah"
+      ],
+      "clues": [
+        "Hewan besar dengan belalai",
+        "Memiliki telinga yang lebar"
+      ]
+    },
+    {
+      "target": "Kucing",
+      "aliases": [
+        "kucing"
+      ],
+      "clues": [
+        "Hewan yang sering dipelihara di rumah",
+        "Suka mengeong"
+      ]
+    },
+    {
+      "target": "Domba",
+      "aliases": [
+        "domba"
+      ],
+      "clues": [
+        "Hewan berbulu tebal",
+        "Menghasilkan wol"
+      ]
+    },
+    {
+      "target": "Sapi",
+      "aliases": [
+        "sapi"
+      ],
+      "clues": [
+        "Hewan ternak pemakan rumput",
+        "Menghasilkan susu"
+      ]
+    },
+    {
+      "target": "Kuda",
+      "aliases": [
+        "kuda"
+      ],
+      "clues": [
+        "Hewan yang sering digunakan untuk ditunggangi",
+        "Memiliki surai"
+      ]
+    },
+    {
+      "target": "Harimau",
+      "aliases": [
+        "harimau"
+      ],
+      "clues": [
+        "Kucing besar pemakan daging",
+        "Memiliki belang hitam"
+      ]
+    },
+    {
+      "target": "Singa",
+      "aliases": [
+        "singa"
+      ],
+      "clues": [
+        "Dikenal sebagai raja hutan",
+        "Singa jantan memiliki surai"
+      ]
+    },
+    {
+      "target": "Macan",
+      "aliases": [
+        "macan"
+      ],
+      "clues": [
+        "Hewan pemakan daging dari keluarga kucing",
+        "Memiliki tubuh yang kuat dan lincah"
+      ]
+    },
+    {
+      "target": "Burung",
+      "aliases": [
+        "burung"
+      ],
+      "clues": [
+        "Hewan yang memiliki sayap dan paruh",
+        "Banyak jenisnya dapat terbang"
+      ]
+    },
+    {
+      "target": "Burung Beo",
+      "aliases": [
+        "burung beo",
+        "beo"
+      ],
+      "clues": [
+        "Burung yang terkenal dapat menirukan suara",
+        "Memiliki paruh yang kuat"
+      ]
+    },
+    {
+      "target": "Burung Kakatua",
+      "aliases": [
+        "burung kakatua",
+        "kakatua"
+      ],
+      "clues": [
+        "Burung yang memiliki jambul di kepalanya",
+        "Terkenal dengan suaranya yang keras"
+      ]
+    },
+    {
+      "target": "Burung Merak",
+      "aliases": [
+        "burung merak",
+        "merak"
+      ],
+      "clues": [
+        "Burung yang memiliki ekor sangat indah",
+        "Sering membuka ekornya seperti kipas"
+      ]
+    },
+    {
+      "target": "Buaya",
+      "aliases": [
+        "buaya"
+      ],
+      "clues": [
+        "Reptil besar yang hidup di air dan darat",
+        "Memiliki rahang dan gigi yang kuat"
+      ]
+    },
+    {
+      "target": "Serigala",
+      "aliases": [
+        "serigala"
+      ],
+      "clues": [
+        "Hewan pemakan daging yang hidup berkelompok",
+        "Mirip anjing tetapi hidup liar"
+      ]
+    },
+    {
+      "target": "Anjing",
+      "aliases": [
+        "anjing"
+      ],
+      "clues": [
+        "Hewan yang dikenal sebagai sahabat manusia",
+        "Memiliki indra penciuman yang tajam"
+      ]
+    },
+    {
+      "target": "Kelinci",
+      "aliases": [
+        "kelinci"
+      ],
+      "clues": [
+        "Mamalia kecil bertelinga panjang",
+        "Suka memakan sayuran"
+      ]
+    },
+    {
+      "target": "Monyet",
+      "aliases": [
+        "monyet"
+      ],
+      "clues": [
+        "Primata yang pandai memanjat",
+        "Memiliki tangan dan kaki yang kuat"
+      ]
+    },
+    {
+      "target": "Simpanse",
+      "aliases": [
+        "simpanse",
+        "chimpanzee"
+      ],
+      "clues": [
+        "Primata yang hidup di Afrika",
+        "Memiliki hubungan kekerabatan dekat dengan manusia"
+      ]
+    },
+    {
+      "target": "Gorila",
+      "aliases": [
+        "gorila",
+        "gorilla"
+      ],
+      "clues": [
+        "Primata besar dari Afrika",
+        "Tubuhnya sangat kuat"
+      ]
+    },
+    {
+      "target": "Panda",
+      "aliases": [
+        "panda",
+        "panda raksasa"
+      ],
+      "clues": [
+        "Beruang hitam putih dari Tiongkok",
+        "Makanan utamanya bambu"
+      ]
+    },
+    {
+      "target": "Koala",
+      "aliases": [
+        "koala"
+      ],
+      "clues": [
+        "Mamalia berkantung dari Australia",
+        "Banyak menghabiskan waktu di pohon"
+      ]
+    },
+    {
+      "target": "Kanguru",
+      "aliases": [
+        "kanguru",
+        "kangguru"
+      ],
+      "clues": [
+        "Mamalia berkantung yang terkenal dari Australia",
+        "Bergerak dengan melompat"
+      ]
+    },
+    {
+      "target": "Zebra",
+      "aliases": [
+        "zebra"
+      ],
+      "clues": [
+        "Hewan Afrika dengan tubuh belang",
+        "Belangnya berwarna hitam dan putih"
+      ]
+    },
+    {
+      "target": "Badak Jawa",
+      "aliases": [
+        "badak jawa",
+        "badak bercula satu"
+      ],
+      "clues": [
+        "Badak langka yang hidup di Indonesia",
+        "Salah satu habitat pentingnya berada di Ujung Kulon"
+      ]
+    },
+    {
+      "target": "Badak Sumatra",
+      "aliases": [
+        "badak sumatra",
+        "badak sumatera"
+      ],
+      "clues": [
+        "Badak bercula dua yang hidup di Asia",
+        "Memiliki rambut di tubuhnya"
+      ]
+    },
+    {
+      "target": "Tapir",
+      "aliases": [
+        "tapir"
+      ],
+      "clues": [
+        "Mamalia dengan pola tubuh hitam putih",
+        "Memiliki moncong pendek yang khas"
+      ]
+    },
+    {
+      "target": "Banteng",
+      "aliases": [
+        "banteng"
+      ],
+      "clues": [
+        "Mamalia liar yang mirip sapi",
+        "Memiliki tanduk dan tubuh kekar"
+      ]
+    },
+    {
+      "target": "Kerbau",
+      "aliases": [
+        "kerbau"
+      ],
+      "clues": [
+        "Hewan ternak yang sering berada di sawah",
+        "Memiliki tanduk melengkung"
+      ]
+    },
+    {
+      "target": "Kambing",
+      "aliases": [
+        "kambing"
+      ],
+      "clues": [
+        "Hewan ternak pemakan tumbuhan",
+        "Memiliki tanduk pada banyak jenisnya"
+      ]
+    },
+    {
+      "target": "Babi",
+      "aliases": [
+        "babi"
+      ],
+      "clues": [
+        "Mamalia dengan moncong khas",
+        "Sering dipelihara sebagai hewan ternak"
+      ]
+    },
+    {
+      "target": "Rusa",
+      "aliases": [
+        "rusa"
+      ],
+      "clues": [
+        "Mamalia pemakan tumbuhan",
+        "Jantan pada banyak jenis memiliki tanduk"
+      ]
+    },
+    {
+      "target": "Kancil",
+      "aliases": [
+        "kancil",
+        "pelanduk"
+      ],
+      "clues": [
+        "Hewan kecil yang terkenal dalam cerita rakyat",
+        "Dikenal cerdik dalam cerita"
+      ]
+    },
+    {
+      "target": "Landak",
+      "aliases": [
+        "landak"
+      ],
+      "clues": [
+        "Mamalia yang tubuhnya dipenuhi duri",
+        "Duri menjadi alat pertahanan"
+      ]
+    },
+    {
+      "target": "Trenggiling",
+      "aliases": [
+        "trenggiling"
+      ],
+      "clues": [
+        "Mamalia bersisik keras",
+        "Dapat menggulung tubuh saat terancam"
+      ]
+    },
+    {
+      "target": "Musang",
+      "aliases": [
+        "musang"
+      ],
+      "clues": [
+        "Mamalia nokturnal yang sering hidup dekat permukiman",
+        "Dikenal juga sebagai pemakan buah dan hewan kecil"
+      ]
+    },
+    {
+      "target": "Tupai",
+      "aliases": [
+        "tupai"
+      ],
+      "clues": [
+        "Mamalia kecil yang lincah di pepohonan",
+        "Memiliki ekor yang panjang pada banyak jenis"
+      ]
+    },
+    {
+      "target": "Kelelawar",
+      "aliases": [
+        "kelelawar"
+      ],
+      "clues": [
+        "Mamalia yang dapat terbang",
+        "Aktif terutama pada malam hari"
+      ]
+    },
+    {
+      "target": "Lumba-lumba",
+      "aliases": [
+        "lumba-lumba",
+        "lumba lumba"
+      ],
+      "clues": [
+        "Mamalia laut yang cerdas",
+        "Bernapas menggunakan paru-paru"
+      ]
+    },
+    {
+      "target": "Paus",
+      "aliases": [
+        "paus"
+      ],
+      "clues": [
+        "Mamalia laut berukuran sangat besar",
+        "Bernapas dengan paru-paru"
+      ]
+    },
+    {
+      "target": "Hiu",
+      "aliases": [
+        "hiu"
+      ],
+      "clues": [
+        "Ikan laut yang memiliki banyak gigi",
+        "Tubuhnya berbentuk torpedo pada banyak jenis"
+      ]
+    },
+    {
+      "target": "Pari",
+      "aliases": [
+        "pari",
+        "ikan pari"
+      ],
+      "clues": [
+        "Ikan bertubuh pipih",
+        "Memiliki sirip dada yang lebar"
+      ]
+    },
+    {
+      "target": "Ikan Badut",
+      "aliases": [
+        "ikan badut",
+        "clownfish"
+      ],
+      "clues": [
+        "Ikan kecil berwarna cerah",
+        "Sering hidup bersama anemon laut"
+      ]
+    },
+    {
+      "target": "Ikan Arwana",
+      "aliases": [
+        "ikan arwana",
+        "arwana"
+      ],
+      "clues": [
+        "Ikan air tawar yang populer sebagai ikan hias",
+        "Memiliki tubuh memanjang dan sisik besar"
+      ]
+    },
+    {
+      "target": "Ikan Lele",
+      "aliases": [
+        "ikan lele",
+        "lele"
+      ],
+      "clues": [
+        "Ikan air tawar dengan sungut",
+        "Sering dibudidayakan untuk konsumsi"
+      ]
+    },
+    {
+      "target": "Ikan Mas",
+      "aliases": [
+        "ikan mas",
+        "ikan mas koki"
+      ],
+      "clues": [
+        "Ikan air tawar yang populer dipelihara",
+        "Memiliki tubuh bersisik"
+      ]
+    },
+    {
+      "target": "Ikan Gabus",
+      "aliases": [
+        "ikan gabus",
+        "gabus"
+      ],
+      "clues": [
+        "Ikan air tawar yang dapat bertahan di kondisi rendah oksigen",
+        "Memiliki kepala besar dan tubuh memanjang"
+      ]
+    },
+    {
+      "target": "Belut",
+      "aliases": [
+        "belut"
+      ],
+      "clues": [
+        "Hewan air dengan tubuh panjang seperti ular",
+        "Sering hidup di lumpur atau sawah"
+      ]
+    },
+    {
+      "target": "Katak",
+      "aliases": [
+        "katak"
+      ],
+      "clues": [
+        "Amfibi yang dapat hidup di air dan darat",
+        "Mengalami metamorfosis"
+      ]
+    },
+    {
+      "target": "Kodok",
+      "aliases": [
+        "kodok"
+      ],
+      "clues": [
+        "Amfibi yang kulitnya umumnya lebih kasar",
+        "Sering ditemukan di lingkungan lembap"
+      ]
+    },
+    {
+      "target": "Salamander",
+      "aliases": [
+        "salamander"
+      ],
+      "clues": [
+        "Amfibi yang bentuk tubuhnya menyerupai kadal",
+        "Beberapa jenis dapat menumbuhkan kembali bagian tubuh"
+      ]
+    },
+    {
+      "target": "Ular",
+      "aliases": [
+        "ular"
+      ],
+      "clues": [
+        "Reptil tanpa kaki",
+        "Bergerak dengan melata"
+      ]
+    },
+    {
+      "target": "Kobra",
+      "aliases": [
+        "kobra",
+        "ular kobra"
+      ],
+      "clues": [
+        "Ular berbisa yang dapat mengembangkan leher",
+        "Memiliki tudung pada jenis tertentu"
+      ]
+    },
+    {
+      "target": "Python",
+      "aliases": [
+        "python",
+        "ular piton",
+        "piton"
+      ],
+      "clues": [
+        "Ular besar yang membelit mangsa",
+        "Tidak menggunakan bisa untuk melumpuhkan mangsa"
+      ]
+    },
+    {
+      "target": "Cicak",
+      "aliases": [
+        "cicak"
+      ],
+      "clues": [
+        "Reptil kecil yang sering berada di dinding rumah",
+        "Dapat menempel pada permukaan"
+      ]
+    },
+    {
+      "target": "Tokek",
+      "aliases": [
+        "tokek"
+      ],
+      "clues": [
+        "Reptil yang suaranya sering terdengar malam hari",
+        "Memiliki tubuh lebih besar daripada cicak rumah"
+      ]
+    },
+    {
+      "target": "Bunglon",
+      "aliases": [
+        "bunglon"
+      ],
+      "clues": [
+        "Reptil yang terkenal dapat mengubah warna tubuh",
+        "Memiliki mata yang dapat bergerak"
+      ]
+    },
+    {
+      "target": "Iguana",
+      "aliases": [
+        "iguana"
+      ],
+      "clues": [
+        "Reptil pemakan tumbuhan pada banyak jenis",
+        "Memiliki jambul atau duri di punggung"
+      ]
+    },
+    {
+      "target": "Buaya Muara",
+      "aliases": [
+        "buaya muara"
+      ],
+      "clues": [
+        "Buaya besar yang hidup di wilayah pesisir dan sungai",
+        "Dapat ditemukan di Asia Tenggara dan Australia"
+      ]
+    },
+    {
+      "target": "Penyu",
+      "aliases": [
+        "penyu"
+      ],
+      "clues": [
+        "Reptil laut yang bertelur di pantai",
+        "Memiliki tempurung"
+      ]
+    },
+    {
+      "target": "Penyu Hijau",
+      "aliases": [
+        "penyu hijau"
+      ],
+      "clues": [
+        "Jenis penyu laut yang banyak memakan tumbuhan saat dewasa",
+        "Sering ditemukan di perairan tropis"
+      ]
+    },
+    {
+      "target": "Burung Hantu",
+      "aliases": [
+        "burung hantu"
+      ],
+      "clues": [
+        "Burung yang aktif pada malam hari",
+        "Memiliki penglihatan dan pendengaran yang baik"
+      ]
+    },
+    {
+      "target": "Elang Jawa",
+      "aliases": [
+        "elang jawa"
+      ],
+      "clues": [
+        "Burung pemangsa endemik Pulau Jawa",
+        "Memiliki jambul khas"
+      ]
+    },
+    {
+      "target": "Elang",
+      "aliases": [
+        "elang"
+      ],
+      "clues": [
+        "Burung pemangsa dengan cakar kuat",
+        "Memiliki penglihatan tajam"
+      ]
+    },
+    {
+      "target": "Merpati",
+      "aliases": [
+        "merpati"
+      ],
+      "clues": [
+        "Burung yang sering dipelihara dan digunakan dalam perlombaan",
+        "Dapat kembali ke tempat asalnya"
+      ]
+    },
+    {
+      "target": "Ayam",
+      "aliases": [
+        "ayam"
+      ],
+      "clues": [
+        "Unggas yang banyak dipelihara manusia",
+        "Jantannya dikenal berkokok"
+      ]
+    },
+    {
+      "target": "Bebek",
+      "aliases": [
+        "bebek",
+        "itik"
+      ],
+      "clues": [
+        "Unggas yang pandai berenang",
+        "Memiliki kaki berselaput"
+      ]
+    },
+    {
+      "target": "Angsa",
+      "aliases": [
+        "angsa"
+      ],
+      "clues": [
+        "Unggas air dengan leher panjang",
+        "Banyak jenis memiliki tubuh putih"
+      ]
+    },
+    {
+      "target": "Flamingo",
+      "aliases": [
+        "flamingo"
+      ],
+      "clues": [
+        "Burung berkaki panjang yang sering berwarna merah muda",
+        "Mencari makanan di perairan dangkal"
+      ]
+    },
+    {
+      "target": "Penguin",
+      "aliases": [
+        "penguin"
+      ],
+      "clues": [
+        "Burung yang tidak dapat terbang",
+        "Pandai berenang dan banyak hidup di belahan selatan"
+      ]
+    },
+    {
+      "target": "Burung Pelikan",
+      "aliases": [
+        "pelikan"
+      ],
+      "clues": [
+        "Burung air dengan kantong pada paruhnya",
+        "Menggunakan kantong paruh untuk membantu menangkap ikan"
+      ]
+    },
+    {
+      "target": "Lebah",
+      "aliases": [
+        "lebah"
+      ],
+      "clues": [
+        "Serangga yang menghasilkan madu",
+        "Hidup berkoloni"
+      ]
+    },
+    {
+      "target": "Kupu-kupu",
+      "aliases": [
+        "kupu-kupu",
+        "kupu kupu"
+      ],
+      "clues": [
+        "Serangga dengan sayap bersisik",
+        "Mengalami metamorfosis sempurna"
+      ]
+    },
+    {
+      "target": "Capung",
+      "aliases": [
+        "capung"
+      ],
+      "clues": [
+        "Serangga dengan dua pasang sayap",
+        "Sering ditemukan di dekat perairan"
+      ]
+    },
+    {
+      "target": "Belalang",
+      "aliases": [
+        "belalang"
+      ],
+      "clues": [
+        "Serangga dengan kaki belakang kuat",
+        "Dapat melompat jauh"
+      ]
+    }
   ],
-  presiden: [
-    {target:"Soekarno",aliases:["soekarno","sukarno","bung karno"],clues:["Presiden Indonesia pertama","Bapak Proklamator Indonesia"]},
-    {target:"Soeharto",aliases:["soeharto","suharto"],clues:["Presiden kedua Indonesia","Memimpin Indonesia selama Orde Baru"]},
-    {target:"B. J. Habibie",aliases:["b.j. habibie","bj habibie","habibie"],clues:["Presiden Indonesia ketiga","Dikenal sebagai tokoh teknologi Indonesia"]},
-    {target:"Joko Widodo",aliases:["joko widodo","jokowi"],clues:["Presiden Indonesia ketujuh","Sering dikenal dengan nama Jokowi"]}
+  "presiden": [
+    {
+      "target": "Soekarno",
+      "aliases": [
+        "soekarno",
+        "sukarno",
+        "bung karno"
+      ],
+      "clues": [
+        "Presiden pertama Republik Indonesia",
+        "Memproklamasikan kemerdekaan bersama Mohammad Hatta"
+      ]
+    },
+    {
+      "target": "Soeharto",
+      "aliases": [
+        "soeharto",
+        "suharto"
+      ],
+      "clues": [
+        "Presiden kedua Republik Indonesia",
+        "Memimpin Indonesia pada masa Orde Baru"
+      ]
+    },
+    {
+      "target": "B. J. Habibie",
+      "aliases": [
+        "b.j. habibie",
+        "bj habibie",
+        "habibie"
+      ],
+      "clues": [
+        "Presiden ketiga Republik Indonesia",
+        "Dikenal sebagai tokoh teknologi dan pernah memimpin BPPT"
+      ]
+    },
+    {
+      "target": "Abdurrahman Wahid",
+      "aliases": [
+        "abdurrahman wahid",
+        "gus dur",
+        "abdul rahman wahid"
+      ],
+      "clues": [
+        "Presiden keempat Republik Indonesia",
+        "Sering dipanggil Gus Dur"
+      ]
+    },
+    {
+      "target": "Megawati Soekarnoputri",
+      "aliases": [
+        "megawati soekarnoputri",
+        "megawati"
+      ],
+      "clues": [
+        "Presiden kelima Republik Indonesia",
+        "Presiden perempuan pertama Indonesia"
+      ]
+    },
+    {
+      "target": "Susilo Bambang Yudhoyono",
+      "aliases": [
+        "susilo bambang yudhoyono",
+        "sby"
+      ],
+      "clues": [
+        "Presiden keenam Republik Indonesia",
+        "Sering dikenal dengan singkatan SBY"
+      ]
+    },
+    {
+      "target": "Joko Widodo",
+      "aliases": [
+        "joko widodo",
+        "jokowi"
+      ],
+      "clues": [
+        "Presiden ketujuh Republik Indonesia",
+        "Dikenal luas dengan nama Jokowi"
+      ]
+    },
+    {
+      "target": "Prabowo Subianto",
+      "aliases": [
+        "prabowo subianto",
+        "prabowo"
+      ],
+      "clues": [
+        "Presiden kedelapan Republik Indonesia",
+        "Dilantik sebagai Presiden pada 20 Oktober 2024"
+      ]
+    },
+    {
+      "target": "Mohammad Hatta",
+      "aliases": [
+        "mohammad hatta",
+        "moh hatta",
+        "bung hatta"
+      ],
+      "clues": [
+        "Wakil Presiden pertama Republik Indonesia",
+        "Proklamator bersama Soekarno"
+      ]
+    },
+    {
+      "target": "Sri Sultan Hamengkubuwono IX",
+      "aliases": [
+        "sri sultan hamengkubuwono ix",
+        "hamengkubuwono ix",
+        "sultan hb ix"
+      ],
+      "clues": [
+        "Wakil Presiden Republik Indonesia pada 1973–1978",
+        "Tokoh Yogyakarta yang berperan dalam perjuangan kemerdekaan"
+      ]
+    },
+    {
+      "target": "Adam Malik",
+      "aliases": [
+        "adam malik"
+      ],
+      "clues": [
+        "Wakil Presiden Republik Indonesia pada 1978–1983",
+        "Tokoh diplomat dan wartawan"
+      ]
+    },
+    {
+      "target": "Umar Wirahadikusumah",
+      "aliases": [
+        "umar wirahadikusumah"
+      ],
+      "clues": [
+        "Wakil Presiden Republik Indonesia pada 1983–1988",
+        "Pernah menjabat sebagai Panglima TNI"
+      ]
+    },
+    {
+      "target": "Sudharmono",
+      "aliases": [
+        "sudharmono"
+      ],
+      "clues": [
+        "Wakil Presiden Republik Indonesia pada 1988–1993",
+        "Mendampingi Presiden Soeharto"
+      ]
+    },
+    {
+      "target": "Try Sutrisno",
+      "aliases": [
+        "try sutrisno"
+      ],
+      "clues": [
+        "Wakil Presiden Republik Indonesia pada 1993–1998",
+        "Pernah menjabat Panglima ABRI"
+      ]
+    },
+    {
+      "target": "B. J. Habibie",
+      "aliases": [
+        "b.j. habibie",
+        "bj habibie",
+        "habibie"
+      ],
+      "clues": [
+        "Wakil Presiden Republik Indonesia pada 1998",
+        "Kemudian menjadi Presiden ketiga"
+      ]
+    },
+    {
+      "target": "Megawati Soekarnoputri",
+      "aliases": [
+        "megawati soekarnoputri",
+        "megawati"
+      ],
+      "clues": [
+        "Wakil Presiden Republik Indonesia pada 1999–2001",
+        "Kemudian menjadi Presiden kelima"
+      ]
+    },
+    {
+      "target": "Hamzah Haz",
+      "aliases": [
+        "hamzah haz"
+      ],
+      "clues": [
+        "Wakil Presiden Republik Indonesia pada 2001–2004",
+        "Mendampingi Presiden Megawati"
+      ]
+    },
+    {
+      "target": "Jusuf Kalla",
+      "aliases": [
+        "jusuf kalla",
+        "jk"
+      ],
+      "clues": [
+        "Wakil Presiden Republik Indonesia pada 2004–2009",
+        "Mendampingi Presiden SBY pada periode pertama"
+      ]
+    },
+    {
+      "target": "Boediono",
+      "aliases": [
+        "boediono"
+      ],
+      "clues": [
+        "Wakil Presiden Republik Indonesia pada 2009–2014",
+        "Mendampingi Presiden SBY pada periode kedua"
+      ]
+    },
+    {
+      "target": "Jusuf Kalla",
+      "aliases": [
+        "jusuf kalla",
+        "jk"
+      ],
+      "clues": [
+        "Wakil Presiden Republik Indonesia pada 2014–2019",
+        "Menjadi wakil presiden untuk periode kedua"
+      ]
+    },
+    {
+      "target": "Ma'ruf Amin",
+      "aliases": [
+        "ma'ruf amin",
+        "maruf amin",
+        "kh ma'ruf amin"
+      ],
+      "clues": [
+        "Wakil Presiden Republik Indonesia pada 2019–2024",
+        "Mendampingi Presiden Joko Widodo"
+      ]
+    },
+    {
+      "target": "Gibran Rakabuming Raka",
+      "aliases": [
+        "gibran rakabuming raka",
+        "gibran"
+      ],
+      "clues": [
+        "Wakil Presiden Republik Indonesia sejak 2024",
+        "Mendampingi Presiden Prabowo Subianto"
+      ]
+    },
+    {
+      "target": "Soekarno",
+      "aliases": [
+        "soekarno",
+        "sukarno"
+      ],
+      "clues": [
+        "Presiden yang membacakan Proklamasi Kemerdekaan 1945",
+        "Membacakan teks proklamasi di Pegangsaan Timur 56"
+      ]
+    },
+    {
+      "target": "Mohammad Hatta",
+      "aliases": [
+        "mohammad hatta",
+        "bung hatta"
+      ],
+      "clues": [
+        "Tokoh yang mendampingi Soekarno saat Proklamasi 1945",
+        "Menandatangani teks proklamasi bersama Soekarno"
+      ]
+    },
+    {
+      "target": "Soeharto",
+      "aliases": [
+        "soeharto",
+        "suharto"
+      ],
+      "clues": [
+        "Presiden Indonesia pada masa Orde Baru",
+        "Menjadi presiden setelah masa kepemimpinan Soekarno"
+      ]
+    },
+    {
+      "target": "B. J. Habibie",
+      "aliases": [
+        "b.j. habibie",
+        "bj habibie"
+      ],
+      "clues": [
+        "Presiden yang memimpin Indonesia setelah Soeharto mengundurkan diri",
+        "Masa kepresidenannya berlangsung pada 1998–1999"
+      ]
+    },
+    {
+      "target": "Abdurrahman Wahid",
+      "aliases": [
+        "abdurrahman wahid",
+        "gus dur"
+      ],
+      "clues": [
+        "Presiden Indonesia yang dikenal dengan panggilan Gus Dur",
+        "Menjabat pada 1999–2001"
+      ]
+    },
+    {
+      "target": "Megawati Soekarnoputri",
+      "aliases": [
+        "megawati soekarnoputri",
+        "megawati"
+      ],
+      "clues": [
+        "Presiden Indonesia pada 2001–2004",
+        "Merupakan putri Soekarno"
+      ]
+    },
+    {
+      "target": "Susilo Bambang Yudhoyono",
+      "aliases": [
+        "susilo bambang yudhoyono",
+        "sby"
+      ],
+      "clues": [
+        "Presiden Indonesia pada 2004–2014",
+        "Menjabat selama dua periode"
+      ]
+    },
+    {
+      "target": "Joko Widodo",
+      "aliases": [
+        "joko widodo",
+        "jokowi"
+      ],
+      "clues": [
+        "Presiden Indonesia pada 2014–2024",
+        "Menjabat selama dua periode"
+      ]
+    },
+    {
+      "target": "Prabowo Subianto",
+      "aliases": [
+        "prabowo subianto",
+        "prabowo"
+      ],
+      "clues": [
+        "Presiden Indonesia pada periode 2024–2029",
+        "Dilantik bersama Wakil Presiden Gibran"
+      ]
+    },
+    {
+      "target": "Mohammad Hatta",
+      "aliases": [
+        "mohammad hatta",
+        "bung hatta"
+      ],
+      "clues": [
+        "Tokoh yang dikenal sebagai Bung Hatta",
+        "Salah satu Proklamator Kemerdekaan Indonesia"
+      ]
+    },
+    {
+      "target": "Adam Malik",
+      "aliases": [
+        "adam malik"
+      ],
+      "clues": [
+        "Tokoh yang pernah menjadi Wakil Presiden dan Menteri Luar Negeri",
+        "Dikenal sebagai diplomat Indonesia"
+      ]
+    },
+    {
+      "target": "Jusuf Kalla",
+      "aliases": [
+        "jusuf kalla",
+        "jk"
+      ],
+      "clues": [
+        "Tokoh yang dua kali menjadi Wakil Presiden",
+        "Mendampingi SBY dan kemudian Joko Widodo"
+      ]
+    },
+    {
+      "target": "Boediono",
+      "aliases": [
+        "boediono"
+      ],
+      "clues": [
+        "Tokoh ekonomi yang pernah menjadi Wakil Presiden",
+        "Mendampingi SBY pada 2009–2014"
+      ]
+    },
+    {
+      "target": "Hamzah Haz",
+      "aliases": [
+        "hamzah haz"
+      ],
+      "clues": [
+        "Tokoh yang pernah menjadi Wakil Presiden Indonesia",
+        "Menjabat pada 2001–2004"
+      ]
+    },
+    {
+      "target": "Ma'ruf Amin",
+      "aliases": [
+        "ma'ruf amin",
+        "maruf amin"
+      ],
+      "clues": [
+        "Tokoh yang pernah menjadi Wakil Presiden Indonesia",
+        "Menjabat pada 2019–2024"
+      ]
+    },
+    {
+      "target": "Gibran Rakabuming Raka",
+      "aliases": [
+        "gibran rakabuming raka",
+        "gibran"
+      ],
+      "clues": [
+        "Wakil Presiden Indonesia pada pemerintahan Prabowo",
+        "Mulai menjabat pada 2024"
+      ]
+    },
+    {
+      "target": "Soekarno",
+      "aliases": [
+        "soekarno",
+        "bung karno"
+      ],
+      "clues": [
+        "Presiden yang dikenal sebagai Bung Karno",
+        "Salah satu Proklamator Kemerdekaan Indonesia"
+      ]
+    },
+    {
+      "target": "Prabowo Subianto",
+      "aliases": [
+        "prabowo subianto",
+        "prabowo"
+      ],
+      "clues": [
+        "Presiden yang memimpin Kabinet Merah Putih",
+        "Kabinet tersebut diumumkan pada 20 Oktober 2024"
+      ]
+    }
   ],
-  menteri: [
-    {target:"Sri Mulyani",aliases:["sri mulyani","sri mulyani indrawati"],clues:["Tokoh yang pernah menjabat Menteri Keuangan RI","Pernah menjadi Direktur Pelaksana Bank Dunia"]},
-    {target:"Budi Gunadi Sadikin",aliases:["budi gunadi sadikin","budi sadikin"],clues:["Tokoh yang pernah menjabat Menteri Kesehatan RI","Sebelumnya berkarier di sektor perbankan"]},
-    {target:"Erick Thohir",aliases:["erick thohir","erick"],clues:["Menteri BUMN yang pernah menjabat","Juga dikenal sebagai pengusaha dan tokoh olahraga"]}
+  "menteri": [
+    {
+      "target": "Bahlil Lahadalia",
+      "aliases": [
+        "bahlil lahadalia"
+      ],
+      "clues": [
+        "Pejabat yang menjabat sebagai Menteri Koordinator Bidang Hilirisasi dan Transisi Energi",
+        "Nama ini tercantum dalam susunan Kabinet Merah Putih; beberapa jabatan mengalami perubahan pada 1 Oktober 2026"
+      ]
+    },
+    {
+      "target": "Sugiono",
+      "aliases": [
+        "sugiono"
+      ],
+      "clues": [
+        "Pejabat yang menjabat sebagai Menteri Koordinator Bidang Pembangunan Manusia dan Kebudayaan",
+        "Nama ini tercantum dalam susunan Kabinet Merah Putih; beberapa jabatan mengalami perubahan pada 1 Oktober 2026"
+      ]
+    },
+    {
+      "target": "Dudung Abdurachman",
+      "aliases": [
+        "dudung abdurachman"
+      ],
+      "clues": [
+        "Pejabat yang menjabat sebagai Menteri Koordinator Bidang Politik dan Keamanan",
+        "Nama ini tercantum dalam susunan Kabinet Merah Putih; beberapa jabatan mengalami perubahan pada 1 Oktober 2026"
+      ]
+    },
+    {
+      "target": "Yusril Ihza Mahendra",
+      "aliases": [
+        "yusril ihza mahendra"
+      ],
+      "clues": [
+        "Pejabat yang menjabat sebagai Menteri Koordinator Bidang Hukum, HAM, Imigrasi, dan Pemasyarakatan",
+        "Nama ini tercantum dalam susunan Kabinet Merah Putih; beberapa jabatan mengalami perubahan pada 1 Oktober 2026"
+      ]
+    },
+    {
+      "target": "Abdul Muhaimin Iskandar",
+      "aliases": [
+        "abdul muhaimin iskandar",
+        "muhaimin iskandar",
+        "cak imin"
+      ],
+      "clues": [
+        "Pejabat yang menjabat sebagai Menteri Koordinator Bidang Pemberdayaan Masyarakat",
+        "Nama ini tercantum dalam susunan Kabinet Merah Putih; beberapa jabatan mengalami perubahan pada 1 Oktober 2026"
+      ]
+    },
+    {
+      "target": "Zulkifli Hasan",
+      "aliases": [
+        "zulkifli hasan"
+      ],
+      "clues": [
+        "Pejabat yang menjabat sebagai Menteri Koordinator Bidang Pangan",
+        "Nama ini tercantum dalam susunan Kabinet Merah Putih; beberapa jabatan mengalami perubahan pada 1 Oktober 2026"
+      ]
+    },
+    {
+      "target": "Prasetyo Hadi",
+      "aliases": [
+        "prasetyo hadi"
+      ],
+      "clues": [
+        "Pejabat yang menjabat sebagai Menteri Sekretaris Negara",
+        "Nama ini tercantum dalam susunan Kabinet Merah Putih; beberapa jabatan mengalami perubahan pada 1 Oktober 2026"
+      ]
+    },
+    {
+      "target": "Muhammad Tito Karnavian",
+      "aliases": [
+        "muhammad tito karnavian",
+        "tito karnavian",
+        "tito"
+      ],
+      "clues": [
+        "Pejabat yang menjabat sebagai Menteri Dalam Negeri",
+        "Nama ini tercantum dalam susunan Kabinet Merah Putih; beberapa jabatan mengalami perubahan pada 1 Oktober 2026"
+      ]
+    },
+    {
+      "target": "Arrmanatha Christiawan Nasir",
+      "aliases": [
+        "arrmanatha christiawan nasir",
+        "arrmanatha nasir",
+        "arrmanatha"
+      ],
+      "clues": [
+        "Pejabat yang menjabat sebagai Menteri Luar Negeri",
+        "Nama ini tercantum dalam susunan Kabinet Merah Putih; beberapa jabatan mengalami perubahan pada 1 Oktober 2026"
+      ]
+    },
+    {
+      "target": "Sjafrie Sjamsoeddin",
+      "aliases": [
+        "sjafrie sjamsoeddin"
+      ],
+      "clues": [
+        "Pejabat yang menjabat sebagai Menteri Pertahanan",
+        "Nama ini tercantum dalam susunan Kabinet Merah Putih; beberapa jabatan mengalami perubahan pada 1 Oktober 2026"
+      ]
+    },
+    {
+      "target": "Nasaruddin Umar",
+      "aliases": [
+        "nasaruddin umar"
+      ],
+      "clues": [
+        "Pejabat yang menjabat sebagai Menteri Agama",
+        "Nama ini tercantum dalam susunan Kabinet Merah Putih; beberapa jabatan mengalami perubahan pada 1 Oktober 2026"
+      ]
+    },
+    {
+      "target": "Supratman Andi Agtas",
+      "aliases": [
+        "supratman andi agtas"
+      ],
+      "clues": [
+        "Pejabat yang menjabat sebagai Menteri Hukum",
+        "Nama ini tercantum dalam susunan Kabinet Merah Putih; beberapa jabatan mengalami perubahan pada 1 Oktober 2026"
+      ]
+    },
+    {
+      "target": "Natalius Pigai",
+      "aliases": [
+        "natalius pigai"
+      ],
+      "clues": [
+        "Pejabat yang menjabat sebagai Menteri Hak Asasi Manusia",
+        "Nama ini tercantum dalam susunan Kabinet Merah Putih; beberapa jabatan mengalami perubahan pada 1 Oktober 2026"
+      ]
+    },
+    {
+      "target": "Agus Andrianto",
+      "aliases": [
+        "agus andrianto"
+      ],
+      "clues": [
+        "Pejabat yang menjabat sebagai Menteri Imigrasi dan Pemasyarakatan",
+        "Nama ini tercantum dalam susunan Kabinet Merah Putih; beberapa jabatan mengalami perubahan pada 1 Oktober 2026"
+      ]
+    },
+    {
+      "target": "Sri Mulyani Indrawati",
+      "aliases": [
+        "sri mulyani indrawati"
+      ],
+      "clues": [
+        "Pejabat yang menjabat sebagai Menteri Keuangan",
+        "Nama ini tercantum dalam susunan Kabinet Merah Putih; beberapa jabatan mengalami perubahan pada 1 Oktober 2026"
+      ]
+    },
+    {
+      "target": "Abdul Mu'ti",
+      "aliases": [
+        "abdul mu'ti",
+        "abdul muti"
+      ],
+      "clues": [
+        "Pejabat yang menjabat sebagai Menteri Pendidikan Dasar dan Menengah",
+        "Nama ini tercantum dalam susunan Kabinet Merah Putih; beberapa jabatan mengalami perubahan pada 1 Oktober 2026"
+      ]
+    },
+    {
+      "target": "Satryo Soemantri Brodjonegoro",
+      "aliases": [
+        "satryo soemantri brodjonegoro"
+      ],
+      "clues": [
+        "Pejabat yang menjabat sebagai Menteri Pendidikan Tinggi, Sains, dan Teknologi",
+        "Nama ini tercantum dalam susunan Kabinet Merah Putih; beberapa jabatan mengalami perubahan pada 1 Oktober 2026"
+      ]
+    },
+    {
+      "target": "Fadli Zon",
+      "aliases": [
+        "fadli zon"
+      ],
+      "clues": [
+        "Pejabat yang menjabat sebagai Menteri Kebudayaan",
+        "Nama ini tercantum dalam susunan Kabinet Merah Putih; beberapa jabatan mengalami perubahan pada 1 Oktober 2026"
+      ]
+    },
+    {
+      "target": "Budi Gunadi Sadikin",
+      "aliases": [
+        "budi gunadi sadikin"
+      ],
+      "clues": [
+        "Pejabat yang menjabat sebagai Menteri Kesehatan",
+        "Nama ini tercantum dalam susunan Kabinet Merah Putih; beberapa jabatan mengalami perubahan pada 1 Oktober 2026"
+      ]
+    },
+    {
+      "target": "Saifullah Yusuf",
+      "aliases": [
+        "saifullah yusuf"
+      ],
+      "clues": [
+        "Pejabat yang menjabat sebagai Menteri Sosial",
+        "Nama ini tercantum dalam susunan Kabinet Merah Putih; beberapa jabatan mengalami perubahan pada 1 Oktober 2026"
+      ]
+    },
+    {
+      "target": "Yassierli",
+      "aliases": [
+        "yassierli"
+      ],
+      "clues": [
+        "Pejabat yang menjabat sebagai Menteri Ketenagakerjaan",
+        "Nama ini tercantum dalam susunan Kabinet Merah Putih; beberapa jabatan mengalami perubahan pada 1 Oktober 2026"
+      ]
+    },
+    {
+      "target": "Abdul Kadir Karding",
+      "aliases": [
+        "abdul kadir karding",
+        "karding"
+      ],
+      "clues": [
+        "Pejabat yang menjabat sebagai Menteri Pelindungan Pekerja Migran Indonesia",
+        "Nama ini tercantum dalam susunan Kabinet Merah Putih; beberapa jabatan mengalami perubahan pada 1 Oktober 2026"
+      ]
+    },
+    {
+      "target": "Muhammad Sarmuji",
+      "aliases": [
+        "muhammad sarmuji"
+      ],
+      "clues": [
+        "Pejabat yang menjabat sebagai Menteri Perindustrian",
+        "Nama ini tercantum dalam susunan Kabinet Merah Putih; beberapa jabatan mengalami perubahan pada 1 Oktober 2026"
+      ]
+    },
+    {
+      "target": "Budi Santoso",
+      "aliases": [
+        "budi santoso"
+      ],
+      "clues": [
+        "Pejabat yang menjabat sebagai Menteri Perdagangan",
+        "Nama ini tercantum dalam susunan Kabinet Merah Putih; beberapa jabatan mengalami perubahan pada 1 Oktober 2026"
+      ]
+    },
+    {
+      "target": "Dody Hanggodo",
+      "aliases": [
+        "dody hanggodo"
+      ],
+      "clues": [
+        "Pejabat yang menjabat sebagai Menteri Pekerjaan Umum",
+        "Nama ini tercantum dalam susunan Kabinet Merah Putih; beberapa jabatan mengalami perubahan pada 1 Oktober 2026"
+      ]
+    },
+    {
+      "target": "Maruarar Sirait",
+      "aliases": [
+        "maruarar sirait"
+      ],
+      "clues": [
+        "Pejabat yang menjabat sebagai Menteri Perumahan dan Kawasan Permukiman",
+        "Nama ini tercantum dalam susunan Kabinet Merah Putih; beberapa jabatan mengalami perubahan pada 1 Oktober 2026"
+      ]
+    },
+    {
+      "target": "Yandri Susanto",
+      "aliases": [
+        "yandri susanto"
+      ],
+      "clues": [
+        "Pejabat yang menjabat sebagai Menteri Desa dan Pembangunan Daerah Tertinggal",
+        "Nama ini tercantum dalam susunan Kabinet Merah Putih; beberapa jabatan mengalami perubahan pada 1 Oktober 2026"
+      ]
+    },
+    {
+      "target": "M. Iftitah Sulaiman",
+      "aliases": [
+        "m. iftitah sulaiman",
+        "iftitah sulaiman",
+        "iftitah"
+      ],
+      "clues": [
+        "Pejabat yang menjabat sebagai Menteri Transmigrasi",
+        "Nama ini tercantum dalam susunan Kabinet Merah Putih; beberapa jabatan mengalami perubahan pada 1 Oktober 2026"
+      ]
+    },
+    {
+      "target": "Dody Purwagandhi",
+      "aliases": [
+        "dody purwagandhi"
+      ],
+      "clues": [
+        "Pejabat yang menjabat sebagai Menteri Perhubungan",
+        "Nama ini tercantum dalam susunan Kabinet Merah Putih; beberapa jabatan mengalami perubahan pada 1 Oktober 2026"
+      ]
+    },
+    {
+      "target": "Meutya Viada Hafid",
+      "aliases": [
+        "meutya viada hafid",
+        "meutya hafid",
+        "meutya"
+      ],
+      "clues": [
+        "Pejabat yang menjabat sebagai Menteri Komunikasi dan Digital",
+        "Nama ini tercantum dalam susunan Kabinet Merah Putih; beberapa jabatan mengalami perubahan pada 1 Oktober 2026"
+      ]
+    },
+    {
+      "target": "Andi Amran Sulaiman",
+      "aliases": [
+        "andi amran sulaiman"
+      ],
+      "clues": [
+        "Pejabat yang menjabat sebagai Menteri Pertanian",
+        "Nama ini tercantum dalam susunan Kabinet Merah Putih; beberapa jabatan mengalami perubahan pada 1 Oktober 2026"
+      ]
+    },
+    {
+      "target": "Raja Juli Antoni",
+      "aliases": [
+        "raja juli antoni"
+      ],
+      "clues": [
+        "Pejabat yang menjabat sebagai Menteri Kehutanan",
+        "Nama ini tercantum dalam susunan Kabinet Merah Putih; beberapa jabatan mengalami perubahan pada 1 Oktober 2026"
+      ]
+    },
+    {
+      "target": "Sakti Wahyu Trenggono",
+      "aliases": [
+        "sakti wahyu trenggono"
+      ],
+      "clues": [
+        "Pejabat yang menjabat sebagai Menteri Kelautan dan Perikanan",
+        "Nama ini tercantum dalam susunan Kabinet Merah Putih; beberapa jabatan mengalami perubahan pada 1 Oktober 2026"
+      ]
+    },
+    {
+      "target": "Nusron Wahid",
+      "aliases": [
+        "nusron wahid"
+      ],
+      "clues": [
+        "Pejabat yang menjabat sebagai Menteri Agraria dan Tata Ruang/Kepala BPN",
+        "Nama ini tercantum dalam susunan Kabinet Merah Putih; beberapa jabatan mengalami perubahan pada 1 Oktober 2026"
+      ]
+    },
+    {
+      "target": "Rachmat Pambudy",
+      "aliases": [
+        "rachmat pambudy"
+      ],
+      "clues": [
+        "Pejabat yang menjabat sebagai Menteri PPN/Kepala Bappenas",
+        "Nama ini tercantum dalam susunan Kabinet Merah Putih; beberapa jabatan mengalami perubahan pada 1 Oktober 2026"
+      ]
+    },
+    {
+      "target": "Rini Widyantini",
+      "aliases": [
+        "rini widyantini"
+      ],
+      "clues": [
+        "Pejabat yang menjabat sebagai Menteri PANRB",
+        "Nama ini tercantum dalam susunan Kabinet Merah Putih; beberapa jabatan mengalami perubahan pada 1 Oktober 2026"
+      ]
+    },
+    {
+      "target": "Erick Thohir",
+      "aliases": [
+        "erick thohir"
+      ],
+      "clues": [
+        "Pejabat yang menjabat sebagai Menteri BUMN",
+        "Nama ini tercantum dalam susunan Kabinet Merah Putih; beberapa jabatan mengalami perubahan pada 1 Oktober 2026"
+      ]
+    },
+    {
+      "target": "Wihaji",
+      "aliases": [
+        "wihaji"
+      ],
+      "clues": [
+        "Pejabat yang menjabat sebagai Menteri Kependudukan dan Pembangunan Keluarga/Kepala BKKBN",
+        "Nama ini tercantum dalam susunan Kabinet Merah Putih; beberapa jabatan mengalami perubahan pada 1 Oktober 2026"
+      ]
+    },
+    {
+      "target": "Hanif Faisol Nurofiq",
+      "aliases": [
+        "hanif faisol nurofiq"
+      ],
+      "clues": [
+        "Pejabat yang menjabat sebagai Menteri Lingkungan Hidup/Kepala BPLH",
+        "Nama ini tercantum dalam susunan Kabinet Merah Putih; beberapa jabatan mengalami perubahan pada 1 Oktober 2026"
+      ]
+    },
+    {
+      "target": "Rosan Perkasa Roeslani",
+      "aliases": [
+        "rosan perkasa roeslani",
+        "rosan roeslani",
+        "rosan"
+      ],
+      "clues": [
+        "Pejabat yang menjabat sebagai Menteri Investasi dan Hilirisasi/Kepala BKPM",
+        "Nama ini tercantum dalam susunan Kabinet Merah Putih; beberapa jabatan mengalami perubahan pada 1 Oktober 2026"
+      ]
+    },
+    {
+      "target": "Budi Arie Setiadi",
+      "aliases": [
+        "budi arie setiadi"
+      ],
+      "clues": [
+        "Pejabat yang menjabat sebagai Menteri Koperasi",
+        "Nama ini tercantum dalam susunan Kabinet Merah Putih; beberapa jabatan mengalami perubahan pada 1 Oktober 2026"
+      ]
+    },
+    {
+      "target": "Maman Abdurahman",
+      "aliases": [
+        "maman abdurahman"
+      ],
+      "clues": [
+        "Pejabat yang menjabat sebagai Menteri UMKM",
+        "Nama ini tercantum dalam susunan Kabinet Merah Putih; beberapa jabatan mengalami perubahan pada 1 Oktober 2026"
+      ]
+    },
+    {
+      "target": "Widiyanti Putri",
+      "aliases": [
+        "widiyanti putri"
+      ],
+      "clues": [
+        "Pejabat yang menjabat sebagai Menteri Pariwisata",
+        "Nama ini tercantum dalam susunan Kabinet Merah Putih; beberapa jabatan mengalami perubahan pada 1 Oktober 2026"
+      ]
+    },
+    {
+      "target": "Teuku Riefky Harsya",
+      "aliases": [
+        "teuku riefky harsya"
+      ],
+      "clues": [
+        "Pejabat yang menjabat sebagai Menteri Ekonomi Kreatif/Kepala Bekraf",
+        "Nama ini tercantum dalam susunan Kabinet Merah Putih; beberapa jabatan mengalami perubahan pada 1 Oktober 2026"
+      ]
+    },
+    {
+      "target": "Arifatul Choiri Fauzi",
+      "aliases": [
+        "arifatul choiri fauzi"
+      ],
+      "clues": [
+        "Pejabat yang menjabat sebagai Menteri Pemberdayaan Perempuan dan Perlindungan Anak",
+        "Nama ini tercantum dalam susunan Kabinet Merah Putih; beberapa jabatan mengalami perubahan pada 1 Oktober 2026"
+      ]
+    },
+    {
+      "target": "Ario Bimo Nandito Ariotedjo",
+      "aliases": [
+        "ario bimo nandito ariotedjo",
+        "dito"
+      ],
+      "clues": [
+        "Pejabat yang menjabat sebagai Menteri Pemuda dan Olahraga",
+        "Nama ini tercantum dalam susunan Kabinet Merah Putih; beberapa jabatan mengalami perubahan pada 1 Oktober 2026"
+      ]
+    },
+    {
+      "target": "Budi Gunawan",
+      "aliases": [
+        "budi gunawan"
+      ],
+      "clues": [
+        "Menteri Koordinator Bidang Politik dan Keamanan pada awal Kabinet Merah Putih",
+        "Nama ini tercantum dalam pengumuman atau susunan Kabinet Merah Putih"
+      ]
+    },
+    {
+      "target": "Airlangga Hartarto",
+      "aliases": [
+        "airlangga hartarto"
+      ],
+      "clues": [
+        "Menteri Koordinator Bidang Perekonomian pada awal Kabinet Merah Putih",
+        "Nama ini tercantum dalam pengumuman atau susunan Kabinet Merah Putih"
+      ]
+    },
+    {
+      "target": "Pratikno",
+      "aliases": [
+        "pratikno"
+      ],
+      "clues": [
+        "Menteri Koordinator Bidang Pembangunan Manusia dan Kebudayaan pada awal Kabinet Merah Putih",
+        "Nama ini tercantum dalam pengumuman atau susunan Kabinet Merah Putih"
+      ]
+    },
+    {
+      "target": "Agus Harimurti Yudhoyono",
+      "aliases": [
+        "agus harimurti yudhoyono"
+      ],
+      "clues": [
+        "Menteri Koordinator Bidang Infrastruktur dan Pembangunan Kewilayahan pada awal Kabinet Merah Putih",
+        "Nama ini tercantum dalam pengumuman atau susunan Kabinet Merah Putih"
+      ]
+    },
+    {
+      "target": "Bahlil Lahadalia",
+      "aliases": [
+        "bahlil lahadalia"
+      ],
+      "clues": [
+        "Menteri Energi dan Sumber Daya Mineral pada awal Kabinet Merah Putih",
+        "Nama ini tercantum dalam pengumuman atau susunan Kabinet Merah Putih"
+      ]
+    },
+    {
+      "target": "Sugiono",
+      "aliases": [
+        "sugiono"
+      ],
+      "clues": [
+        "Menteri Luar Negeri pada awal Kabinet Merah Putih",
+        "Nama ini tercantum dalam pengumuman atau susunan Kabinet Merah Putih"
+      ]
+    },
+    {
+      "target": "Sri Mulyani Indrawati",
+      "aliases": [
+        "sri mulyani indrawati"
+      ],
+      "clues": [
+        "Menteri Keuangan yang juga pernah menjabat pada periode pemerintahan sebelumnya",
+        "Nama ini tercantum dalam pengumuman atau susunan Kabinet Merah Putih"
+      ]
+    },
+    {
+      "target": "Erick Thohir",
+      "aliases": [
+        "erick thohir"
+      ],
+      "clues": [
+        "Menteri BUMN yang kembali dipercaya pada Kabinet Merah Putih",
+        "Nama ini tercantum dalam pengumuman atau susunan Kabinet Merah Putih"
+      ]
+    },
+    {
+      "target": "Budi Gunadi Sadikin",
+      "aliases": [
+        "budi gunadi sadikin"
+      ],
+      "clues": [
+        "Menteri Kesehatan yang kembali dipercaya pada Kabinet Merah Putih",
+        "Nama ini tercantum dalam pengumuman atau susunan Kabinet Merah Putih"
+      ]
+    },
+    {
+      "target": "Andi Amran Sulaiman",
+      "aliases": [
+        "andi amran sulaiman"
+      ],
+      "clues": [
+        "Menteri Pertanian yang kembali dipercaya pada Kabinet Merah Putih",
+        "Nama ini tercantum dalam pengumuman atau susunan Kabinet Merah Putih"
+      ]
+    },
+    {
+      "target": "Budi Arie Setiadi",
+      "aliases": [
+        "budi arie setiadi"
+      ],
+      "clues": [
+        "Menteri Koperasi pada Kabinet Merah Putih",
+        "Nama ini tercantum dalam pengumuman atau susunan Kabinet Merah Putih"
+      ]
+    },
+    {
+      "target": "Fadli Zon",
+      "aliases": [
+        "fadli zon"
+      ],
+      "clues": [
+        "Menteri Kebudayaan pada Kabinet Merah Putih",
+        "Nama ini tercantum dalam pengumuman atau susunan Kabinet Merah Putih"
+      ]
+    },
+    {
+      "target": "Meutya Viada Hafid",
+      "aliases": [
+        "meutya viada hafid",
+        "meutya hafid",
+        "meutya"
+      ],
+      "clues": [
+        "Menteri Komunikasi dan Digital pada Kabinet Merah Putih",
+        "Nama ini tercantum dalam pengumuman atau susunan Kabinet Merah Putih"
+      ]
+    },
+    {
+      "target": "Agus Gumiwang Kartasasmita",
+      "aliases": [
+        "agus gumiwang kartasasmita"
+      ],
+      "clues": [
+        "Menteri Perindustrian pada awal Kabinet Merah Putih",
+        "Nama ini tercantum dalam pengumuman atau susunan Kabinet Merah Putih"
+      ]
+    }
   ],
-  pahlawan: [
-    {target:"Diponegoro",aliases:["diponegoro","pangeran diponegoro"],clues:["Pahlawan dari Jawa","Memimpin Perang Jawa melawan Belanda"]},
-    {target:"Cut Nyak Dien",aliases:["cut nyak dien","cut nyak dhien"],clues:["Pahlawan perempuan dari Aceh","Berjuang melawan Belanda"]},
-    {target:"Ki Hajar Dewantara",aliases:["ki hajar dewantara","ki hajar"],clues:["Tokoh pendidikan Indonesia","Pendiri Perguruan Taman Siswa"]}
+  "pahlawan": [
+    {
+      "target": "Pangeran Diponegoro",
+      "aliases": [
+        "diponegoro",
+        "pangeran diponegoro"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Jawa",
+        " Memimpin Perang Jawa melawan Belanda"
+      ]
+    },
+    {
+      "target": "Cut Nyak Dien",
+      "aliases": [
+        "cut nyak dien",
+        "cut nyak dhien"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Aceh",
+        " Memimpin perjuangan melawan Belanda di Aceh"
+      ]
+    },
+    {
+      "target": "Cut Nyak Meutia",
+      "aliases": [
+        "cut nyak meutia",
+        "cut nyak mutia"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Aceh",
+        " Pejuang perempuan dari Aceh yang melawan Belanda"
+      ]
+    },
+    {
+      "target": "Tuanku Imam Bonjol",
+      "aliases": [
+        "tuanku imam bonjol"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Sumatra Barat",
+        " Tokoh penting dalam Perang Padri"
+      ]
+    },
+    {
+      "target": "Teuku Umar",
+      "aliases": [
+        "teuku umar"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Aceh",
+        " Pejuang Aceh yang menggunakan strategi gerilya melawan Belanda"
+      ]
+    },
+    {
+      "target": "Pattimura",
+      "aliases": [
+        "pattimura",
+        "thomas matulessy"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Maluku",
+        " Memimpin perlawanan rakyat Maluku terhadap Belanda"
+      ]
+    },
+    {
+      "target": "Martha Christina Tiahahu",
+      "aliases": [
+        "martha christina tiahahu"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Maluku",
+        " Pejuang perempuan dari Maluku"
+      ]
+    },
+    {
+      "target": "Sultan Hasanuddin",
+      "aliases": [
+        "sultan hasanuddin",
+        "hasanuddin"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Sulawesi Selatan",
+        " Raja Gowa yang melawan VOC"
+      ]
+    },
+    {
+      "target": "Sisingamangaraja XII",
+      "aliases": [
+        "sisingamangaraja xii"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Sumatra Utara",
+        " Memimpin perlawanan terhadap Belanda di Tanah Batak"
+      ]
+    },
+    {
+      "target": "Kapitan Pattimura",
+      "aliases": [
+        "kapitan pattimura",
+        "pattimura",
+        "thomas matulessy"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Maluku",
+        " Nama perjuangan Thomas Matulessy yang memimpin perlawanan 1817"
+      ]
+    },
+    {
+      "target": "Ki Hajar Dewantara",
+      "aliases": [
+        "ki hajar dewantara"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Yogyakarta",
+        " Tokoh pendidikan dan pendiri Taman Siswa"
+      ]
+    },
+    {
+      "target": "Dewi Sartika",
+      "aliases": [
+        "dewi sartika"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Jawa Barat",
+        " Pelopor pendidikan perempuan di Jawa Barat"
+      ]
+    },
+    {
+      "target": "R. A. Kartini",
+      "aliases": [
+        "r.a. kartini",
+        "ra kartini",
+        "kartini"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Jawa Tengah",
+        " Tokoh emansipasi dan pendidikan perempuan"
+      ]
+    },
+    {
+      "target": "Nyi Ageng Serang",
+      "aliases": [
+        "nyi ageng serang"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Jawa",
+        " Pejuang perempuan yang terlibat dalam Perang Jawa"
+      ]
+    },
+    {
+      "target": "Sultan Ageng Tirtayasa",
+      "aliases": [
+        "sultan ageng tirtayasa",
+        "ageng tirtayasa"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Banten",
+        " Sultan Banten yang menentang monopoli VOC"
+      ]
+    },
+    {
+      "target": "Sultan Nuku",
+      "aliases": [
+        "sultan nuku"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Tidore",
+        " Pemimpin Tidore yang melawan Belanda"
+      ]
+    },
+    {
+      "target": "Sultan Baabullah",
+      "aliases": [
+        "sultan baabullah"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Ternate",
+        " Sultan Ternate yang melawan Portugis"
+      ]
+    },
+    {
+      "target": "Sultan Iskandar Muda",
+      "aliases": [
+        "sultan iskandar muda"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Aceh",
+        " Sultan Aceh pada masa kejayaan Kesultanan Aceh"
+      ]
+    },
+    {
+      "target": "Tuanku Tambusai",
+      "aliases": [
+        "tuanku tambusai"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Riau",
+        " Tokoh perlawanan terhadap Belanda dari wilayah Riau"
+      ]
+    },
+    {
+      "target": "Tuanku Imam Bonjol",
+      "aliases": [
+        "tuanku imam bonjol"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Sumatra Barat",
+        " Tokoh utama Perang Padri"
+      ]
+    },
+    {
+      "target": "Jenderal Sudirman",
+      "aliases": [
+        "jenderal sudirman",
+        "sudirman"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Jawa Tengah",
+        " Panglima Besar TNI pada masa revolusi kemerdekaan"
+      ]
+    },
+    {
+      "target": "Jenderal Ahmad Yani",
+      "aliases": [
+        "jenderal ahmad yani"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Jawa Tengah",
+        " Panglima Angkatan Darat yang gugur pada 1965"
+      ]
+    },
+    {
+      "target": "A. H. Nasution",
+      "aliases": [
+        "ah nasution",
+        "a h nasution",
+        "nasution"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Sumatra Utara",
+        " Tokoh militer dan salah satu perumus strategi perang gerilya"
+      ]
+    },
+    {
+      "target": "Sutoyo Siswomiharjo",
+      "aliases": [
+        "sutoyo siswomiharjo"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Jawa Tengah",
+        " Pahlawan revolusi yang gugur pada 1965"
+      ]
+    },
+    {
+      "target": "M. T. Haryono",
+      "aliases": [
+        "mt haryono",
+        "m.t. haryono"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Jawa Timur",
+        " Pahlawan revolusi dan perwira TNI AD"
+      ]
+    },
+    {
+      "target": "D. I. Panjaitan",
+      "aliases": [
+        "di panjaitan",
+        "d.i. panjaitan"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Sumatra Utara",
+        " Pahlawan revolusi dan perwira TNI AD"
+      ]
+    },
+    {
+      "target": "S. Parman",
+      "aliases": [
+        "s parman",
+        "s. parman"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Jawa Tengah",
+        " Pahlawan revolusi dan perwira intelijen TNI AD"
+      ]
+    },
+    {
+      "target": "Pierre Tendean",
+      "aliases": [
+        "pierre tendean"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Jakarta",
+        " Perwira yang dikenal sebagai ajudan Jenderal A. H. Nasution"
+      ]
+    },
+    {
+      "target": "Karel Sadsuitubun",
+      "aliases": [
+        "karel sadsuitubun"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Maluku",
+        " Perwira yang gugur dalam peristiwa 1965"
+      ]
+    },
+    {
+      "target": "Supriyadi",
+      "aliases": [
+        "supriyadi"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Jawa Timur",
+        " Tokoh PETA yang memimpin pemberontakan Blitar 1945"
+      ]
+    },
+    {
+      "target": "I Gusti Ngurah Rai",
+      "aliases": [
+        "i gusti ngurah rai",
+        "ngurah rai"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Bali",
+        " Pemimpin Puputan Margarana di Bali"
+      ]
+    },
+    {
+      "target": "Robert Wolter Monginsidi",
+      "aliases": [
+        "robert wolter monginsidi",
+        "wolter monginsidi"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Sulawesi Selatan",
+        " Pejuang kemerdekaan dari Sulawesi Selatan"
+      ]
+    },
+    {
+      "target": "Oto Iskandar di Nata",
+      "aliases": [
+        "oto iskandar di nata"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Jawa Barat",
+        " Tokoh pergerakan dan anggota BPUPKI"
+      ]
+    },
+    {
+      "target": "Mohammad Husni Thamrin",
+      "aliases": [
+        "mohammad husni thamrin"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Jakarta",
+        " Tokoh pergerakan nasional dari Betawi"
+      ]
+    },
+    {
+      "target": "Dr. Sutomo",
+      "aliases": [
+        "dr. sutomo"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Jawa Timur",
+        " Pendiri Budi Utomo"
+      ]
+    },
+    {
+      "target": "Wahidin Soedirohoesodo",
+      "aliases": [
+        "wahidin soedirohoesodo"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Jawa Tengah",
+        " Tokoh yang menggagas pentingnya pendidikan bagi bumiputra"
+      ]
+    },
+    {
+      "target": "Cipto Mangunkusumo",
+      "aliases": [
+        "cipto mangunkusumo"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Jawa Tengah",
+        " Tokoh Tiga Serangkai"
+      ]
+    },
+    {
+      "target": "Douwes Dekker",
+      "aliases": [
+        "douwes dekker",
+        "ernest douwes dekker"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Jawa Timur",
+        " Tokoh Tiga Serangkai dengan nama Ernest Douwes Dekker"
+      ]
+    },
+    {
+      "target": "Ki Bagus Hadikusumo",
+      "aliases": [
+        "ki bagus hadikusumo"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Yogyakarta",
+        " Tokoh pergerakan dan anggota BPUPKI"
+      ]
+    },
+    {
+      "target": "KH Ahmad Dahlan",
+      "aliases": [
+        "kh ahmad dahlan",
+        "ahmad dahlan"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Yogyakarta",
+        " Pendiri Muhammadiyah"
+      ]
+    },
+    {
+      "target": "KH Hasyim Asy'ari",
+      "aliases": [
+        "kh hasyim asy'ari",
+        "hasyim asy'ari",
+        "hasyim asyari"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Jawa Timur",
+        " Pendiri Nahdlatul Ulama"
+      ]
+    },
+    {
+      "target": "Agus Salim",
+      "aliases": [
+        "agus salim"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Sumatra Barat",
+        " Tokoh diplomasi dan pergerakan nasional"
+      ]
+    },
+    {
+      "target": "Mohammad Natsir",
+      "aliases": [
+        "mohammad natsir"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Sumatra Barat",
+        " Tokoh politik dan pernah menjadi Perdana Menteri"
+      ]
+    },
+    {
+      "target": "Sutan Sjahrir",
+      "aliases": [
+        "sutan sjahrir"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Sumatra Barat",
+        " Tokoh pergerakan dan Perdana Menteri pertama Indonesia"
+      ]
+    },
+    {
+      "target": "Tan Malaka",
+      "aliases": [
+        "tan malaka"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Sumatra Barat",
+        " Tokoh pergerakan dan penulis politik"
+      ]
+    },
+    {
+      "target": "Mohammad Yamin",
+      "aliases": [
+        "mohammad yamin"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Sumatra Barat",
+        " Tokoh pergerakan, sastrawan, dan anggota BPUPKI"
+      ]
+    },
+    {
+      "target": "Soepomo",
+      "aliases": [
+        "soepomo"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Jawa Tengah",
+        " Ahli hukum dan anggota BPUPKI"
+      ]
+    },
+    {
+      "target": "Soekarno",
+      "aliases": [
+        "soekarno",
+        "sukarno",
+        "bung karno"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Jawa Timur",
+        " Proklamator dan presiden pertama Indonesia"
+      ]
+    },
+    {
+      "target": "Mohammad Hatta",
+      "aliases": [
+        "mohammad hatta",
+        "bung hatta"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Sumatra Barat",
+        " Proklamator dan wakil presiden pertama Indonesia"
+      ]
+    },
+    {
+      "target": "Ahmad Soebardjo",
+      "aliases": [
+        "ahmad soebardjo",
+        "achmad soebardjo"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Jawa Barat",
+        " Tokoh yang terlibat dalam perumusan dan diplomasi kemerdekaan"
+      ]
+    },
+    {
+      "target": "Abdul Muis",
+      "aliases": [
+        "abdul muis"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Sumatra Barat",
+        " Sastrawan dan tokoh pergerakan nasional"
+      ]
+    },
+    {
+      "target": "Ki Sarmidi Mangunsarkoro",
+      "aliases": [
+        "ki sarmidi mangunsarkoro"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Jawa Tengah",
+        " Tokoh pendidikan dan pergerakan nasional"
+      ]
+    },
+    {
+      "target": "Maria Walanda Maramis",
+      "aliases": [
+        "maria walanda maramis"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Sulawesi Utara",
+        " Pelopor pendidikan perempuan di Minahasa"
+      ]
+    },
+    {
+      "target": "Rasuna Said",
+      "aliases": [
+        "rasuna said"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Sumatra Barat",
+        " Pejuang perempuan dan tokoh pergerakan"
+      ]
+    },
+    {
+      "target": "Halim Perdanakusuma",
+      "aliases": [
+        "halim perdanakusuma"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Madura",
+        " Perwira Angkatan Udara dan tokoh penerbangan militer"
+      ]
+    },
+    {
+      "target": "Adisutjipto",
+      "aliases": [
+        "adisucipto",
+        "adisutjipto"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Jawa Tengah",
+        " Pelopor TNI Angkatan Udara dan tokoh penerbangan"
+      ]
+    },
+    {
+      "target": "Abdul Halim",
+      "aliases": [
+        "abdul halim"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Jawa Barat",
+        " Tokoh perjuangan dan pergerakan kemerdekaan"
+      ]
+    },
+    {
+      "target": "Soeprapto",
+      "aliases": [
+        "soeprapto"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Jawa Tengah",
+        " Pahlawan revolusi yang gugur pada 1965"
+      ]
+    },
+    {
+      "target": "Yos Sudarso",
+      "aliases": [
+        "yos sudarso"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Maluku",
+        " Perwira Angkatan Laut yang gugur dalam Pertempuran Laut Aru"
+      ]
+    },
+    {
+      "target": "Iswahyudi",
+      "aliases": [
+        "iswahyudi"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Jawa Timur",
+        " Tokoh awal Angkatan Udara Republik Indonesia"
+      ]
+    },
+    {
+      "target": "Sultan Syarif Kasim II",
+      "aliases": [
+        "sultan syarif kasim ii"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Riau",
+        " Sultan Siak yang mendukung Republik Indonesia"
+      ]
+    },
+    {
+      "target": "Tjilik Riwut",
+      "aliases": [
+        "tjilik riwut"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Kalimantan Tengah",
+        " Tokoh perjuangan dan pembangunan Kalimantan"
+      ]
+    },
+    {
+      "target": "Sam Ratulangi",
+      "aliases": [
+        "sam ratulangi"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Sulawesi Utara",
+        " Tokoh nasional dari Minahasa dan Gubernur Sulawesi pertama"
+      ]
+    },
+    {
+      "target": "Johannes Leimena",
+      "aliases": [
+        "johannes leimena"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Maluku",
+        " Tokoh kesehatan dan politik yang pernah menjadi wakil perdana menteri"
+      ]
+    },
+    {
+      "target": "Frans Kaisiepo",
+      "aliases": [
+        "frans kaisiepo"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Papua",
+        " Tokoh perjuangan integrasi Papua ke Indonesia"
+      ]
+    },
+    {
+      "target": "Silas Papare",
+      "aliases": [
+        "silas papare"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Papua",
+        " Tokoh perjuangan dari Papua"
+      ]
+    },
+    {
+      "target": "Martha Christina Tiahahu",
+      "aliases": [
+        "martha christina tiahahu"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Maluku",
+        " Pejuang perempuan yang terlibat dalam perlawanan Maluku"
+      ]
+    },
+    {
+      "target": "Nani Wartabone",
+      "aliases": [
+        "nani wartabone"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Gorontalo",
+        " Tokoh yang memimpin perlawanan dan deklarasi kemerdekaan di Gorontalo pada 1942"
+      ]
+    },
+    {
+      "target": "Pangeran Antasari",
+      "aliases": [
+        "pangeran antasari",
+        "antasari"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Kalimantan Selatan",
+        " Pemimpin Perang Banjar melawan Belanda"
+      ]
+    },
+    {
+      "target": "Sultan Mahmud Badaruddin II",
+      "aliases": [
+        "sultan mahmud badaruddin ii",
+        "smb ii"
+      ],
+      "clues": [
+        "Tokoh perjuangan dari Sumatra Selatan",
+        " Sultan Palembang yang melawan Belanda"
+      ]
+    }
   ]
 };
 
