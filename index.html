@@ -1,295 +1,281 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Tebak Cepat Indonesia</title>
-    <style>
-        :root {
-            --primary: #4f46e5;
-            --primary-hover: #4338ca;
-            --bg: #0f172a;
-            --card-bg: #1e293b;
-            --text: #f8fafc;
-            --accent: #f59e0b;
-            --danger: #ef4444;
-            --success: #22c55e;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .container {
-            background-color: var(--card-bg);
-            width: 100%;
-            max-width: 600px;
-            border-radius: 16px;
-            padding: 30px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-            text-align: center;
-        }
-
-        h1 {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            color: var(--accent);
-        }
-
-        .category-select {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        button {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        button:hover {
-            background-color: var(--primary-hover);
-            transform: translateY(-2px);
-        }
-
-        .game-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            background: #334155;
-            padding: 10px 15px;
-            border-radius: 8px;
-        }
-
-        .category-badge {
-            background: var(--accent);
-            color: #000;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: bold;
-        }
-
-        .clue-box {
-            background-color: #0f172a;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            border-left: 4px solid var(--accent);
-            text-align: left;
-            min-height: 80px;
-        }
-
-        .input-group {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-        input[type="text"] {
-            width: 100%;
-            padding: 12px;
-            border-radius: 8px;
-            border: 2px solid #475569;
-            background-color: #0f172a;
-            color: white;
-            font-size: 1rem;
-            outline: none;
-        }
-
-        input[type="text"]:focus { border-color: var(--primary); }
-
-        .action-btns {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .btn-hint { background-color: #d97706; flex: 1; }
-        .btn-skip { background-color: #64748b; flex: 1; }
-
-        .feedback {
-            font-weight: bold;
-            font-size: 1.1rem;
-            min-height: 25px;
-            margin-bottom: 15px;
-        }
-
-        .success { color: var(--success); }
-        .error { color: var(--danger); }
-
-        .hidden { display: none !important; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Game Tebak Cepat Indonesia</title>
+<style>
+:root{
+  --primary:#4f46e5;--primary-hover:#4338ca;--bg:#0f172a;
+  --card:#1e293b;--text:#f8fafc;--accent:#f59e0b;
+  --danger:#ef4444;--success:#22c55e;
+}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Segoe UI,Tahoma,sans-serif}
+body{
+  background:var(--bg);color:var(--text);min-height:100vh;
+  display:flex;justify-content:center;align-items:center;padding:20px
+}
+.container{
+  width:100%;max-width:600px;background:var(--card);border-radius:16px;
+  padding:30px;box-shadow:0 10px 25px rgba(0,0,0,.5);text-align:center
+}
+h1{font-size:1.8rem;margin-bottom:20px;color:var(--accent)}
+.category-select{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}
+button{
+  border:0;border-radius:8px;padding:12px 18px;background:var(--primary);
+  color:#fff;font-size:1rem;font-weight:700;cursor:pointer
+}
+button:hover{background:var(--primary-hover)}
+.game-header{
+  display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:8px;
+  align-items:center;margin-bottom:20px;background:#334155;padding:10px;
+  border-radius:8px;font-size:.9rem
+}
+.category-badge{
+  background:var(--accent);color:#000;padding:5px 8px;border-radius:20px;
+  font-size:.78rem;font-weight:700
+}
+.clue-box{
+  background:var(--bg);padding:20px;border-radius:8px;margin-bottom:20px;
+  border-left:4px solid var(--accent);text-align:left;min-height:90px
+}
+.input-group{display:flex;gap:10px;margin-bottom:15px}
+input[type=text]{
+  width:100%;padding:12px;border-radius:8px;border:2px solid #475569;
+  background:var(--bg);color:#fff;font-size:1rem;outline:none
+}
+input[type=text]:focus{border-color:var(--primary)}
+.action-btns{display:flex;gap:10px;margin-bottom:20px}
+.btn-hint{background:#d97706;flex:1}
+.btn-skip{background:#64748b;flex:1}
+.feedback{font-weight:700;font-size:1.1rem;min-height:28px;margin-bottom:15px}
+.success{color:var(--success)}.error{color:var(--danger)}
+.hidden{display:none!important}
+.back{background:transparent;color:#94a3b8;text-decoration:underline;width:100%}
+@media(max-width:520px){
+  body{padding:10px}.container{padding:20px}
+  .game-header{grid-template-columns:1fr 1fr;font-size:.8rem}
+  .category-select{grid-template-columns:1fr}
+  .input-group{flex-direction:column}
+}
+</style>
 </head>
 <body>
 
 <div class="container">
-    <h1>Tebak Cepat Indonesia</h1>
+  <h1>🧠 Tebak Cepat Indonesia</h1>
 
-    <!-- Menu Utama -->
-    <div id="menu-screen">
-        <p style="margin-bottom: 20px;">Pilih kategori untuk memulai permainan:</p>
-        <div class="category-select">
-            <button onclick="startGame('hewan')">🐾 Hewan</button>
-            <button onclick="startGame('presiden')">🇮🇩 Presiden & Wapres</button>
-            <button onclick="startGame('menteri')">🏛 Menteri RI</button>
-            <button onclick="startGame('pahlawan')">🎖️ Pahlawan</button>
-        </div>
+  <div id="menu-screen">
+    <p style="margin-bottom:20px">Pilih kategori untuk memulai permainan:</p>
+    <div class="category-select">
+      <button type="button" onclick="startGame('hewan')">🐾 Hewan</button>
+      <button type="button" onclick="startGame('presiden')">🇮🇩 Presiden &amp; Wapres</button>
+      <button type="button" onclick="startGame('menteri')">🏛️ Menteri RI</button>
+      <button type="button" onclick="startGame('pahlawan')">🎖️ Pahlawan</button>
+    </div>
+  </div>
+
+  <div id="game-screen" class="hidden">
+    <div class="game-header">
+      <span class="category-badge" id="category-title">Kategori</span>
+      <div>Soal: <strong id="question-number">1/1</strong></div>
+      <div>Skor: <strong id="score">0</strong></div>
+      <div>Waktu: <strong id="timer">30</strong>s</div>
     </div>
 
-    <!-- Area Permainan -->
-    <div id="game-screen" class="hidden">
-        <div class="game-header">
-            <span class="category-badge" id="category-title">Kategori</span>
-            <div>Soal: <strong id="question-number">1/10</strong></div>
-            <div>Skor: <strong id="score">0</strong></div>
-            <div>Waktu: <strong id="timer">30</strong>s</div>
-        </div>
-
-        <div class="clue-box">
-            <strong>Petunjuk:</strong>
-            <p id="clue-text" style="margin-top: 5px;">-</p>
-        </div>
-
-        <div class="input-group">
-            <input type="text" id="answer-input" placeholder="Ketik jawaban di sini..." autocomplete="off">
-            <button onclick="checkAnswer()">Jawab</button>
-        </div>
-
-        <div class="action-btns">
-            <button class="btn-hint" onclick="useHint()">💡 Petunjuk (<span id="hint-count">2</span>)</button>
-            <button class="btn-skip" onclick="nextQuestion()">➡️ Lewati</button>
-        </div>
-
-        <div class="feedback" id="feedback"></div>
-
-        <button onclick="backToMenu()" style="background: transparent; color: #94a3b8; text-decoration: underline; width: 100%;">Kembali ke Menu Utama</button>
+    <div class="clue-box">
+      <strong>Petunjuk:</strong>
+      <p id="clue-text" style="margin-top:8px">-</p>
     </div>
+
+    <div class="input-group">
+      <input type="text" id="answer-input" placeholder="Ketik jawaban di sini..." autocomplete="off">
+      <button type="button" onclick="checkAnswer()">Jawab</button>
+    </div>
+
+    <div class="action-btns">
+      <button type="button" class="btn-hint" onclick="useHint()">💡 Petunjuk (<span id="hint-count">2</span>)</button>
+      <button type="button" class="btn-skip" onclick="nextQuestion()">➡️ Lewati</button>
+    </div>
+
+    <div class="feedback" id="feedback"></div>
+    <button type="button" class="back" onclick="backToMenu()">Kembali ke Menu Utama</button>
+  </div>
 </div>
 
 <script>
+/* DATABASE SOAL - TANPA ADMIN */
+const database = {
+  hewan: [
+    {target:"Komodo",aliases:["komodo"],clues:["Kadal terbesar di dunia","Endemik dari Nusa Tenggara Timur"]},
+    {target:"Harimau Sumatra",aliases:["harimau sumatra","harimau sumatera","harimau"],clues:["Kucing besar endemik Pulau Sumatra","Memiliki garis-garis hitam tebal"]},
+    {target:"Orangutan",aliases:["orangutan","orang utan"],clues:["Primata yang hidup di hutan Indonesia","Banyak ditemukan di Kalimantan dan Sumatra"]},
+    {target:"Cenderawasih",aliases:["cenderawasih","burung cenderawasih"],clues:["Burung indah dari Papua","Dikenal sebagai burung surga"]}
+  ],
+  presiden: [
+    {target:"Soekarno",aliases:["soekarno","sukarno","bung karno"],clues:["Presiden Indonesia pertama","Bapak Proklamator Indonesia"]},
+    {target:"Soeharto",aliases:["soeharto","suharto"],clues:["Presiden kedua Indonesia","Memimpin Indonesia selama Orde Baru"]},
+    {target:"B. J. Habibie",aliases:["b.j. habibie","bj habibie","habibie"],clues:["Presiden Indonesia ketiga","Dikenal sebagai tokoh teknologi Indonesia"]},
+    {target:"Joko Widodo",aliases:["joko widodo","jokowi"],clues:["Presiden Indonesia ketujuh","Sering dikenal dengan nama Jokowi"]}
+  ],
+  menteri: [
+    {target:"Sri Mulyani",aliases:["sri mulyani","sri mulyani indrawati"],clues:["Tokoh yang pernah menjabat Menteri Keuangan RI","Pernah menjadi Direktur Pelaksana Bank Dunia"]},
+    {target:"Budi Gunadi Sadikin",aliases:["budi gunadi sadikin","budi sadikin"],clues:["Tokoh yang pernah menjabat Menteri Kesehatan RI","Sebelumnya berkarier di sektor perbankan"]},
+    {target:"Erick Thohir",aliases:["erick thohir","erick"],clues:["Menteri BUMN yang pernah menjabat","Juga dikenal sebagai pengusaha dan tokoh olahraga"]}
+  ],
+  pahlawan: [
+    {target:"Diponegoro",aliases:["diponegoro","pangeran diponegoro"],clues:["Pahlawan dari Jawa","Memimpin Perang Jawa melawan Belanda"]},
+    {target:"Cut Nyak Dien",aliases:["cut nyak dien","cut nyak dhien"],clues:["Pahlawan perempuan dari Aceh","Berjuang melawan Belanda"]},
+    {target:"Ki Hajar Dewantara",aliases:["ki hajar dewantara","ki hajar"],clues:["Tokoh pendidikan Indonesia","Pendiri Perguruan Taman Siswa"]}
+  ]
+};
 
-    function startGame(category) {
-        currentCategory = category;
-        currentQuestions = [...database[category]].sort(() => Math.random() - 0.5);
-        currentIndex = 0;
-        score = 0;
+let currentCategory="";
+let currentQuestions=[];
+let currentIndex=0;
+let score=0;
+let timer=30;
+let timerInterval=null;
+let hintsLeft=2;
+let answerLocked=false;
 
-        if (currentQuestions.length === 0) {
-            alert("Kategori ini belum memiliki soal.");
-            return;
-        }
+function startGame(category){
+  if(!database[category] || database[category].length===0){
+    alert("Kategori ini belum memiliki soal.");
+    return;
+  }
 
-        document.getElementById('category-title').innerText = category.toUpperCase();
-        document.getElementById('menu-screen').classList.add('hidden');
-        document.getElementById('game-screen').classList.remove('hidden');
-        document.getElementById('score').innerText = score;
-        loadQuestion();
+  clearInterval(timerInterval);
+  currentCategory=category;
+  currentQuestions=[...database[category]].sort(()=>Math.random()-0.5);
+  currentIndex=0;
+  score=0;
+  answerLocked=false;
+
+  document.getElementById("menu-screen").classList.add("hidden");
+  document.getElementById("game-screen").classList.remove("hidden");
+  document.getElementById("category-title").textContent=getCategoryName(category);
+  document.getElementById("score").textContent=score;
+
+  loadQuestion();
+}
+
+function getCategoryName(category){
+  const names={
+    hewan:"🐾 HEWAN",
+    presiden:"🇮🇩 PRESIDEN & WAPRES",
+    menteri:"🏛️ MENTERI RI",
+    pahlawan:"🎖️ PAHLAWAN"
+  };
+  return names[category] || category.toUpperCase();
+}
+
+function loadQuestion(){
+  clearInterval(timerInterval);
+
+  if(currentIndex>=currentQuestions.length){
+    finishGame();
+    return;
+  }
+
+  const q=currentQuestions[currentIndex];
+  timer=30;
+  hintsLeft=2;
+  answerLocked=false;
+
+  document.getElementById("question-number").textContent=(currentIndex+1)+"/"+currentQuestions.length;
+  document.getElementById("timer").textContent=timer;
+  document.getElementById("hint-count").textContent=hintsLeft;
+  document.getElementById("answer-input").value="";
+  document.getElementById("feedback").textContent="";
+  document.getElementById("feedback").className="feedback";
+  document.getElementById("clue-text").textContent=q.clues[0];
+
+  setTimeout(()=>document.getElementById("answer-input").focus(),50);
+
+  timerInterval=setInterval(()=>{
+    timer--;
+    document.getElementById("timer").textContent=timer;
+
+    if(timer<=0){
+      clearInterval(timerInterval);
+      answerLocked=true;
+      showFeedback("⏰ Waktu habis! Jawaban: "+q.target,false);
+      setTimeout(nextQuestion,1500);
     }
+  },1000);
+}
 
-    function loadQuestion() {
-        if (currentIndex >= currentQuestions.length) {
-            alert(`Selesai! Skor Akhir: ${score}`);
-            backToMenu();
-            return;
-        }
+function normalizeAnswer(text){
+  return text.toLowerCase().trim().replace(/\s+/g," ");
+}
 
-        clearInterval(timerInterval);
-        timer = 30;
-        hintsLeft = 2;
+function checkAnswer(){
+  if(answerLocked) return;
 
-        document.getElementById('question-number').innerText = `${currentIndex + 1}/${currentQuestions.length}`;
-        document.getElementById('timer').innerText = timer;
-        document.getElementById('hint-count').innerText = hintsLeft;
-        document.getElementById('answer-input').value = "";
-        document.getElementById('feedback').innerText = "";
+  const input=normalizeAnswer(document.getElementById("answer-input").value);
+  if(!input) return;
 
-        const q = currentQuestions[currentIndex];
-        document.getElementById('clue-text').innerText = q.clues[0];
+  const q=currentQuestions[currentIndex];
+  const correct=q.aliases.some(alias=>normalizeAnswer(alias)===input);
 
-        timerInterval = setInterval(() => {
-            timer--;
-            document.getElementById('timer').innerText = timer;
-            if (timer <= 0) {
-                clearInterval(timerInterval);
-                showFeedback("Waktu Habis! Jawaban: " + q.target, false);
-                setTimeout(nextQuestion, 2000);
-            }
-        }, 1000);
-    }
+  if(correct){
+    answerLocked=true;
+    clearInterval(timerInterval);
+    score+=timer*10;
+    document.getElementById("score").textContent=score;
+    showFeedback("🎉 Jawaban benar!",true);
+    setTimeout(nextQuestion,1000);
+  }else{
+    showFeedback("❌ Jawaban salah, coba lagi!",false);
+  }
+}
 
-    function checkAnswer() {
-        const input = document.getElementById('answer-input').value.trim().toLowerCase();
-        const q = currentQuestions[currentIndex];
-        if (!input) return;
+function useHint(){
+  if(answerLocked || hintsLeft<=0) return;
 
-        if (q.aliases.some(alias => alias === input)) {
-            clearInterval(timerInterval);
-            score += timer * 10;
-            document.getElementById('score').innerText = score;
-            showFeedback("Jawaban Benar! 🎉", true);
-            setTimeout(nextQuestion, 1500);
-        } else {
-            showFeedback("Jawaban Salah!", false);
-        }
-    }
+  const q=currentQuestions[currentIndex];
+  hintsLeft--;
+  document.getElementById("hint-count").textContent=hintsLeft;
 
-    function useHint() {
-        if (hintsLeft <= 0) return;
-        const q = currentQuestions[currentIndex];
-        hintsLeft--;
-        document.getElementById('hint-count').innerText = hintsLeft;
+  if(hintsLeft===1 && q.clues[1]){
+    document.getElementById("clue-text").textContent=q.clues[0]+" | "+q.clues[1];
+  }else{
+    const mask=q.target.replace(/[A-Za-z]/g,(char,i)=>i%2===0?char:"_");
+    document.getElementById("clue-text").textContent=q.clues[0]+" | Bocoran: "+mask;
+  }
+}
 
-        if (hintsLeft === 1 && q.clues[1]) {
-            document.getElementById('clue-text').innerText += " | " + q.clues[1];
-        } else {
-            const mask = q.target.replace(/[a-zA-Z]/g, (char, i) => i % 2 === 0 ? char : '_');
-            document.getElementById('clue-text').innerText += ` | Bocoran: ${mask}`;
-        }
-    }
+function showFeedback(text,success){
+  const fb=document.getElementById("feedback");
+  fb.textContent=text;
+  fb.className="feedback "+(success?"success":"error");
+}
 
-    function showFeedback(text, isSuccess) {
-        const fb = document.getElementById('feedback');
-        fb.innerText = text;
-        fb.className = "feedback " + (isSuccess ? "success" : "error");
-    }
+function nextQuestion(){
+  clearInterval(timerInterval);
+  if(answerLocked || currentIndex<currentQuestions.length){
+    currentIndex++;
+    loadQuestion();
+  }
+}
 
-    function nextQuestion() {
-        currentIndex++;
-        loadQuestion();
-    }
+function finishGame(){
+  clearInterval(timerInterval);
+  alert("🎉 Permainan selesai!\nSkor akhir: "+score);
+  backToMenu();
+}
 
-    function backToMenu() {
-        clearInterval(timerInterval);
-        document.getElementById('game-screen').classList.add('hidden');
-        document.getElementById('menu-screen').classList.remove('hidden');
-    }
+function backToMenu(){
+  clearInterval(timerInterval);
+  answerLocked=true;
+  document.getElementById("game-screen").classList.add("hidden");
+  document.getElementById("menu-screen").classList.remove("hidden");
+}
 
-    document.getElementById('answer-input').addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') checkAnswer();
-    });
+document.getElementById("answer-input").addEventListener("keydown",function(e){
+  if(e.key==="Enter") checkAnswer();
+});
 </script>
-
 </body>
 </html>
